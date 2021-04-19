@@ -1,0 +1,21 @@
+.icon-section{
+    min-width: 50px;
+    text-align: center;
+}
+.icon-section i{
+    font-size: 30px;
+}
+.contact-section{
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+}
+.contact-section div{
+    font-size: 17px;
+}
+.contact-section .contact-text{
+  padding-left: 20px;
+}
+.min-height-230{
+  min-height: 230px;
+}

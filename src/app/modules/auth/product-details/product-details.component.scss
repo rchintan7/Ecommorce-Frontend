@@ -1,0 +1,62 @@
+.btn-gift {
+    img {
+        max-width: 20px;
+        margin-right: 10px;
+    }
+}
+
+.product-right-area {
+    background-color: #F2F2F3;
+    padding: 15px;
+}
+
+.ordre-item-incres {
+    border: 1px solid #707070
+}
+
+.price-area {
+    display: inline-block;
+    min-width: 110px;
+    .ago-price {
+        color: #532270;
+        text-align: right;
+        line-height: 1;
+    }
+    .latest-price {
+        color: #FF0000;
+        font-size: 30px;
+        font-weight: 600;
+        line-height: 1.2;
+    }
+}
+
+.radote-pigiau {
+    color: #FF0000;
+}
+
+.secure-image-section {
+    margin-right: 10px;
+    top: 0px;
+}
+
+.bg-red {
+    background-color: red;
+    border: 1px solid red;
+    color: #FFF;
+}
+
+.bg-green {
+    background-color: green;
+    border: 1px solid green;
+    color: #FFF;
+}
+
+.remove-bg {
+    color: #532270 !important;
+    background-color: #FFF !important;
+}
+
+.hide {
+    display: none;
+}
+

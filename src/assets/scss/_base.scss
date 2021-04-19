@@ -1,0 +1,45 @@
+@font-face {
+    font-family: "Helvetica";
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: url("../fonts/helvetica-light.ttf") format("ttf");
+}
+
+@font-face {
+    font-family: "Helvetica";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("../fonts/Helvetica.ttf") format("ttf");
+}
+
+@font-face {
+    font-family: "Helvetica";
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url("../fonts/Helvetica-Bold.ttf") format("ttf");
+}
+
+//color
+.gray-text {
+    color: #B5B5B5;
+}
+
+//img
+img {
+    max-width: 100%;
+}
+
+//layout
+.col-xl-2-5 {
+    @include media-breakpoint-up(xl) {
+        position: relative;
+        width: 100%;
+        padding-right: 10px;
+        padding-left: 10px;
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+}

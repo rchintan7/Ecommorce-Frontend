@@ -1,0 +1,193 @@
+.order-tabbing {
+    .tab-container {
+        .nav {
+            margin-bottom: 20px;
+            .nav-item {
+                margin-right: 15px;
+                @include media-breakpoint-down(md) {
+                    display: block;
+                    width: 100%;
+                    text-align: center;
+                }
+                .nav-link {
+                    background-color: #F2F2F2;
+                    color: $primary;
+                }
+            }
+        }
+        .nav-pills .nav-link.active,
+        .nav-pills .show>.nav-link {
+            color: #fff;
+            background-color: #532270;
+        }
+    }
+}
+
+//choice-goods-list
+.choice-goods-list {
+    list-style: none;
+    padding: 0;
+    li {
+        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
+        color: $primary;
+        img {
+            max-width: 55px;
+        }
+        .choice-goods-list-image-area {
+            min-width: 70px;
+            text-align: center;
+            img{
+                width: 60px;
+            }
+        }
+    }
+}
+.pristatysime-box{
+    .pristatysime-box-dic{
+        display: none;
+    }
+    &:hover{
+        .pristatysime-box-dic{
+            display: block;
+        }
+    }
+}
+
+.ordre-item-incres {
+    background: #EFEFF0;
+    display: flex;
+    width: 100px;
+    color: $primary;
+    align-items: center;
+    font-size: 18px;
+    .btn-minus {
+        font-size: 20px;
+        height: 40px;
+        padding: 0 8px;
+        svg {
+            width: 15px;
+        }
+    }
+    .num {
+        margin: 0 auto;
+    }
+    .btn-plus {
+        height: 40px;
+        padding: 0 8px;
+        svg {
+            width: 15px;
+        }
+    }
+}
+
+//page-links-list
+.page-links-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto 30px;
+    vertical-align: top;
+    li {
+        display: inline-block;
+        margin: 0 10px 10px;
+        vertical-align: top;
+        .btn-all-goods {
+            display: flex;
+            align-items: center;
+            svg {
+                width: 17px;
+                max-height: 17px;
+                margin-right: 6px;
+            }
+        }
+    }
+}
+
+//radio
+.custom-radio {
+    display: inline-block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid #bababa;
+    padding: 5px 75px 35px;
+    margin: 10px;
+    img {
+        max-height: 50px;
+    }
+    input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
+    .checkmark {
+        position: absolute;
+        bottom: 5px;
+        left: 50%;
+        height: 20px;
+        width: 20px;
+        background-color: #eee;
+        border-radius: 50%;
+        -webkit-transform: translateX(-50%);
+        -moz-transform: translateX(-50%);
+        transform: translateX(-50%);
+    }
+    &:hover input~.checkmark {
+        background-color: #ccc;
+    }
+    input:checked~.checkmark {
+        background-color: #532270;
+    }
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+    input:checked~.checkmark:after {
+        display: block;
+    }
+    .checkmark:after {
+        top: 6px;
+        left: 7px;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: white;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .payment-section {
+        text-align: center;
+    }
+}
+
+.kartu-modal-list {
+    background: #F2F2F2;
+    margin: 0 -15px 10px;
+    padding: 5px 15px;
+    .custom-checkbox-1 {
+        height: 11px;
+        .checkmark {
+            background-color: #fff;
+        }
+    }
+    .kartu-modal-list-image {
+        width: 60px;
+    }
+    .kartu-modal-list-image2 {
+        width: 110px;
+    }
+    .kartu-modal-pricing {
+        color: #FF0000;
+        width: 80px;
+        text-align: right;
+    }
+}

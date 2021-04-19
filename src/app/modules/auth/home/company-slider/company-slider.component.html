@@ -1,0 +1,9 @@
+<div class="company-slider">
+    <owl-carousel-o [options]="customOptions">
+        <ng-template carouselSlide *ngFor="let companyLogo of companyLogos">
+            <div class="text-center">
+                <img [src]="defualtImage" [lazyLoad]="companyLogo.logo" />
+            </div>
+        </ng-template>
+    </owl-carousel-o>
+</div>

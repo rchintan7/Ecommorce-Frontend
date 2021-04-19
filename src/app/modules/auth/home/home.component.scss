@@ -1,0 +1,133 @@
+@import '../../../../assets/scss/functions';
+@import '../../../../assets/scss/variables';
+.sec-banner {
+    margin-bottom: 30px;
+}
+
+//sec-product-list-box
+.sec-product-list-box {
+    background: #F9F9F9;
+    border: 1px solid #707070;
+    margin: 100px 0 10px;
+    padding-bottom: 30px;
+    .title-with-star {
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        box-shadow: 10px 10px 6px #00000029;
+        text-align: center;
+        padding: 30px;
+        max-width: 1100px;
+        margin: -80px auto 100px;
+        .sec-title-product-list {
+            color: #000;
+            font-size: 22px;
+        }
+        .stars-list {
+            text-align: center;
+            img {
+                width: 40px;
+                margin: 5px;
+            }
+        }
+    }
+}
+
+.pro-left-list-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    img {
+        // width: 20px;
+    }
+    .title {
+        padding-left: 20px;
+        font-size: 18px;
+        line-height: 1.2;
+    }
+}
+
+.pro-left-list {
+    list-style: none;
+    padding: 0;
+    li {
+        // text-align: center;
+        cursor: pointer;
+        margin: 10px 0;
+    }
+}
+
+.pro-box {
+    box-shadow: 10px 10px 6px #00000029;
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.slider-top-btn {
+    display: block;
+    color: $primary;
+    background: #F2F2F2;
+    border-radius: 4px;
+    text-align: center;
+    padding: 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    &:hover {
+        text-decoration: none;
+    }
+    img {
+        max-height: 19px;
+    }
+}
+
+//info-box
+.info-box {
+    display: flex;
+    align-items: center;
+    .info-box-img {
+        max-width: 50px;
+        max-height: 50px;
+    }
+    .info-box-textarea {
+        padding-left: 10px;
+        .text-top {
+            font-size: 14px;
+            color: $primary;
+            margin-bottom: 2px;
+        }
+        .text-bottom {
+            font-size: 12px;
+            color: #00000080;
+        }
+    }
+}
+
+.modal-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: white;
+    opacity: 0.6;
+    z-index: 100;
+    height: 3000px;
+}
+
+.pos {
+    font-size: 30px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -25px;
+    margin-top: -25px;
+    z-index: 100;
+}
+
+.span-pos {
+    position: absolute;
+    top: 58%;
+    left: 37%;
+    margin-left: -25px;
+    margin-top: -25px;
+    z-index: 100;
+    font-size: 30px;
+}

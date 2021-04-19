@@ -1,0 +1,9 @@
+<div class="product-image-slider">
+    <owl-carousel-o [options]="customOptions">
+        <ng-template carouselSlide *ngFor="let image of sliderImage.image">
+            <div class="text-center">
+                <img [src]="image"  (click)="redirectToProductDetails(sliderImage.slug)" />
+            </div>
+        </ng-template>
+    </owl-carousel-o>
+</div>

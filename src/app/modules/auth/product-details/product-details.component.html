@@ -1,0 +1,597 @@
+<section class="content-wrapper">
+     <div class="container">
+          <div class="row">
+               <div class="col-md-6 mb-3">
+                    <div class="single-product-img-box">
+                         <div class="single-product-thume-images">
+                              <div class="thume-image-item" *ngFor="let image of productDetail.image;let i=index">
+                                   <img class="" title="Vaizdas" [src]="image" (click)="onSelectImage(image)" />
+                              </div>
+                         </div>
+                         <div class="single-product-img">
+                              <div>
+                                   <div class="wishlist-section">
+                                        <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!productDetail.isWishlistAdded"
+                                             (click)="addToWishlist({'isWishlistAdded':productDetail.isWishlistAdded, 'productId':productDetail.id})"
+                                             width="28" height="29" viewBox="0 0 40.052 35.634">
+                                             <path id="heart" d="M20.026,35.634a2.349,2.349,0,0,1-1.548-.582c-1.618-1.415-3.178-2.744-4.554-3.917l-.007-.006A84.7,84.7,0,0,1,3.973,21.8C1.262,18.525,0,15.424,0,12.037a12.518,12.518,0,0,1,3.177-8.55A10.77,10.77,0,0,1,11.189,0a10.074,10.074,0,0,1,6.293,2.172,12.875,12.875,0,0,1,2.544,2.657,12.876,12.876,0,0,1,2.545-2.657A10.074,10.074,0,0,1,28.864,0a10.771,10.771,0,0,1,8.012,3.487,12.518,12.518,0,0,1,3.177,8.55c0,3.387-1.262,6.488-3.972,9.758a84.69,84.69,0,0,1-9.943,9.333c-1.379,1.175-2.941,2.506-4.563,3.924a2.35,2.35,0,0,1-1.548.581ZM11.189,2.346A8.45,8.45,0,0,0,4.9,5.078a10.183,10.183,0,0,0-2.556,6.959c0,2.849,1.059,5.4,3.433,8.261a83.35,83.35,0,0,0,9.659,9.045l.007.006c1.382,1.177,2.948,2.512,4.578,3.937,1.64-1.428,3.208-2.765,4.592-3.944A83.371,83.371,0,0,0,34.274,20.3c2.374-2.864,3.433-5.412,3.433-8.261A10.183,10.183,0,0,0,35.15,5.078a8.449,8.449,0,0,0-6.287-2.731,7.781,7.781,0,0,0-4.858,1.682A11.385,11.385,0,0,0,21.3,7.161a1.481,1.481,0,0,1-2.544,0,11.374,11.374,0,0,0-2.707-3.133,7.781,7.781,0,0,0-4.858-1.682Zm0,0"
+                                                  transform="translate(0 0)" fill="#754e8c" />
+                                        </svg>
+                                        <i class="fa fa-heart fa-2x text-right wishlist-icon active" *ngIf="productDetail.isWishlistAdded" (click)="addToWishlist({'isWishlistAdded':productDetail.isWishlistAdded, 'productId':productDetail.id})"></i>
+                                   </div>
+                                   <div class="secure-image-section">
+                                        <div *ngFor="let icon of productDetail.icon_list;let i=index">
+                                             <img [src]="icon.icon" alt="{{icon.icon_text}}" title="{{icon.icon_text}}" />
+                                        </div>
+                                   </div>
+                              </div>
+                              <div class="img-zoom-container desktop-view" (mouseleave)="mouseout()" (mouseenter)="imageZoom('myimage', 'myresult');">
+                                   <div class="img-zoom-lens" [ngClass]="{'hide':hide}" id="zoom-image" style="left: 244.5px; top: 200px;">
+                                   </div>
+                                   <img id="myimage" class="pro-img" [src]="selectedImage">
+                                   <div id="myresult" class="img-zoom-result" [ngClass]="{'hide':hide}"></div>
+                              </div>
+                              <div class="img-zoom-container mobile-view">
+                                   <img id="myimage" class="pro-img" (click)="openSliderImageModal(template2)" [src]="selectedImage" />
+                              </div>
+                              <!-- <div class="desktop-view">
+                                   <zoom-image [img]="selectedImage" [zoom]="3" [lenSize]="50" [imgWidth]="50"   [divZoomed]="divZoomed" ></zoom-image>
+                                   <div #divZoomed class="img-zoom-result"></div>
+                              </div>
+                              <div class="img-zoom-container mobile-view">
+                                   <img id="myimage" class="pro-img" (click)="openSliderImageModal(template2)" [src]="selectedImage" />
+                              </div> -->
+                         <!-- </div> -->
+                         </div>
+                    </div>
+                    <div class="button-section">
+                         <div class="row">
+                              <div class="col-md-12 text-center mb-3">
+                                   <rating [(ngModel)]="productDetail.rating" [max]="maxRating" [readonly]="isReadOnly"></rating>
+                              </div>
+                         </div>
+                         <div class="row">
+                              <div class="col-lg-6">
+                                   <button class="btn btn-block btn-primary mb-2 remove-bg"
+                                        (click)="openContactForm()">Klausti apie prekę</button>
+                              </div>
+                              <div class="col-lg-6">
+                                   <button class="btn btn-block btn-primary mb-2 remove-bg"
+                                        (click)="openContactForm()">Reikia santechniko
+                                        pagalbos?</button>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+               <div class="col-md-6">
+                    <img *ngIf="productDetail.manufacture_logo"  [src]="productDetail.manufacture_logo" alt="Gamintojo logotipas" title="Gamintojo logotipas" width="100" height="100" />
+                    <h3>{{productDetail.product_name}}</h3>
+                    <button class="btn btn-primary btn-block btn-gift bg-green">
+                         <img class="" src="assets/images/icons/cart-white.svg" alt="" />
+                         <span>Tapk partneriu ir pradėk rinkti taškus</span>
+                    </button>
+                    <button class="btn btn-primary btn-block btn-gift bg-red mb-4">
+                         <img class="" src="assets/images/icons/cart-white.svg" alt="" />
+                         <span>Nuolaidos kodas arba {{timer}}</span>
+                    </button>
+                    <div class="row" *ngIf="productDetail?.insurance?.length || productDetail?.warranty?.length">
+                         <div class="col-md-6">
+                              <div class="form-group form-check">
+                                   <input type="checkbox" class="form-check-input"
+                                        (change)="warrnttyChecked($event.target.checked)" id="exampleCheck1"
+                                        [checked]="isWarrnttyChecked">
+                                   <label class="form-check-label" for="exampleCheck1">Gamintojo suteikama
+                                        garantija</label>
+                              </div>
+                         </div>
+                         <div class="col-md-6" *ngIf="isWarrnttyChecked">
+                              <div class="form-group">
+                                   <select class="form-control" id="" (change)="onChangeWarranty($event.target.value,productDetail.warranty)">
+                                        <option disabled selected>Pasirinkite Metai</option>
+                                        <option *ngFor="let warranty of productDetail.warranty;let i = index"
+                                             value="{{i}}">{{warranty.year}}
+                                             Metai € {{decimalNumber(warranty.price)}}
+                                        </option>
+                                   </select>
+                              </div>
+                              <div class="form-group">
+                                   <select class="form-control" id=""
+                                        (change)="onChangeInsurance($event.target.value,productDetail.insurance)">
+                                        <option disabled selected>Draudimas
+                                        </option>
+                                        <option *ngFor="let insurance of productDetail.insurance;let i = index"
+                                             value="{{i}}">{{insurance.year}}
+                                             Metai € {{decimalNumber(insurance.price)}}
+                                        </option>
+                                   </select>
+                              </div>
+                         </div>
+                    </div>
+                    <div class="product-right-area">
+                         <div class="row">
+                              <div class="col-md-12">
+                                   <div class="">
+                                        <label>Prekės kodas: {{productDetail.model}}</label>
+                                   </div>
+                              </div>
+                         </div>
+                         <div class="row align-items-center mb-3">
+                              <div class="col-6 col-sm ">
+                                   <div class="price-area">
+                                        <ng-container *ngIf="totalProductComparePrice!=0.00">
+                                             <div class="ago-price">
+                                                  € {{decimalNumber(totalProductComparePrice)}}
+                                             </div>
+                                        </ng-container>
+                                        <div class="latest-price"
+                                             [ngClass]="{'text-primary':totalProductComparePrice==0.00}"
+                                             (click)="openModal(template)">€
+                                             {{decimalNumber(totalProductPrice)}}
+                                        </div>
+                                   </div>
+                                   <div class="radote-pigiau" (click)="openModal(template)">Radote pigiau?</div>
+                              </div>
+                              <div class="col-6 col-sm-auto">
+                                   <div class="ordre-item-incres ml-auto">
+                                        <button class="btn btn-minus" type="button" (click)="decreaseProductQuantity()">
+                                             <svg xmlns="http://www.w3.org/2000/svg"
+                                                  xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1"
+                                                  x="0px" y="0px" viewBox="0 0 409.6 409.6"
+                                                  style="enable-background:new 0 0 409.6 409.6;" xml:space="preserve"
+                                                  width="20px" height="20px">
+                                                  <g>
+                                                       <g>
+                                                            <g>
+                                                                 <path d="M392.533,187.733H17.067C7.641,187.733,0,195.374,0,204.8s7.641,17.067,17.067,17.067h375.467    c9.426,0,17.067-7.641,17.067-17.067S401.959,187.733,392.533,187.733z"
+                                                                      data-original="#000000" class="active-path"
+                                                                      data-old_color="#000000" fill="#532270" />
+                                                            </g>
+                                                       </g>
+                                                  </g>
+                                             </svg>
+                                        </button>
+                                        <div class="num">{{productQuantity}}</div>
+                                        <button class="btn btn-plus" type="button" (click)="increaseProductQuantity()">
+                                             <svg xmlns="http://www.w3.org/2000/svg"
+                                                  xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1"
+                                                  x="0px" y="0px" viewBox="0 0 409.6 409.6"
+                                                  style="enable-background:new 0 0 409.6 409.6;" xml:space="preserve"
+                                                  width="20px" height="20px">
+                                                  <g>
+                                                       <g>
+                                                            <g>
+                                                                 <path d="M392.533,187.733H221.867V17.067C221.867,7.641,214.226,0,204.8,0s-17.067,7.641-17.067,17.067v170.667H17.067    C7.641,187.733,0,195.374,0,204.8s7.641,17.067,17.067,17.067h170.667v170.667c0,9.426,7.641,17.067,17.067,17.067    s17.067-7.641,17.067-17.067V221.867h170.667c9.426,0,17.067-7.641,17.067-17.067S401.959,187.733,392.533,187.733z"
+                                                                      data-original="#000000" class="active-path"
+                                                                      data-old_color="#000000" fill="#532270" />
+                                                            </g>
+                                                       </g>
+                                                  </g>
+                                             </svg>
+                                        </button>
+                                   </div>
+                              </div>
+                              <div class="col-12 col-sm">
+                                   
+                                   <button class="btn btn-primary btn-block" title="Į krepšelį" type="button" (click)="openProductSuggestionModal(productDetail,productQuantity)">Į krepšelį</button>
+                              </div>
+                         </div>
+                                              
+                         <div class="row form-group" *ngFor="let product of productOption;let i=index;">
+                              <div class="col-md-4" *ngFor="let value of product;let j = index;">
+                                   <label><span class="text-danger">*</span>&nbsp;{{value.name}}</label>
+                                   <select [(ngModel)]="selectedPowerOption[i][j].value"
+                                        (change)="getPowerData($event.target.value,value.pwr_level,value.variation_type,value.pwr_id)"
+                                        class="form-control" id="dimensions" name="dimensions">
+                                        <option value="" selected disabled>--Prašome pasirinkti--</option>
+                                        <ng-container *ngFor="let value1 of value.options">
+                                             <option *ngIf="value1" [value]="value1.pwr_option_value_id">{{value1.name}}</option>
+                                        </ng-container>
+                                   </select>
+                                   <label *ngIf="selectedPowerOption[i][j].message" class="text-danger">{{selectedPowerOption[i][j].message}}</label>
+                              </div>
+                         </div>     
+                         <ul class="choice-goods-list">
+                              <li>
+                                   <div class="mr-3 choice-goods-list-image-area">
+                                        <img class="" src="assets/images/icons/shipping-green-icon.svg"   title="Pristatymo piktograma" alt="Pristatymo piktograma" />
+                                   </div>
+                                   <div>NEMOKAMAI atsiimkite Vilniuje, uu017esakymu0173 atsiu0117mimo punkte
+                                   </div>
+                              </li>
+                              <li class="pristatysime-box">
+                                   <div>
+                                        <div class="d-flex">
+                                             <div class="mr-3 choice-goods-list-image-area">
+                                                  <img class="image-css" src="assets/images/icons/shipping-red-icon.svg" title="Pristatymo piktograma" alt="Pristatymo piktograma" />
+                                             </div>
+                                             <div>Pristatysime u012f namus rugpju016bu010dio 4 d. (u20ac 14.99)</div>
+                                        </div>
+                                        <p class="text-primary text-css pristatysime-box-dic">
+                                             Dėmesio! Pristatymo terminai yra preliminarūs, kadangi terminai atsinaujina
+                                             priklausomai nuo faktinio užsakymo pateikimo laiko. Galutinis pristatymo terminas yra
+                                             pateikiamas užsakymo
+                                             patvirtinime.
+                                        </p>
+                                   </div>
+                              </li>
+                         </ul>                       
+                    </div>
+               </div>
+          </div>
+     </div>
+</section>
+
+<section class="bg-gray sec-product-details-tabbing">
+     <div class="container">
+          <div class="product-details-tabbing">
+               <tabset type="pills" #staticTabs>
+                    <tab heading="Aprašymas">
+                         <div class="product-details-tab-item" [innerHTML]="productDetail.long_description"></div>
+                    </tab>
+                    <tab heading="Atsiliepimai">
+                         <div class="product-details-tab-item">
+                              <div class="text-right">
+                                   <button class="btn btn-primary mb-2" (click)="openReviewModal()">Rašyti naują
+                                        atsiliepimą</button>
+                              </div>
+                              <ul class="review-list">
+                                   <li *ngFor="let review of reviews">
+                                        <div class="d-flex align-items-center mb-2">
+                                             <div class="rating-tabb d-flex mr-2">
+                                                  <rating [(ngModel)]="review.rating" [max]="maxRating"
+                                                       [readonly]="isReadOnly"></rating>
+                                             </div>
+                                             <span class="mr-2">{{review.rating}} / 5</span>
+                                             <h5 class="mb-0">{{review.name}}</h5>
+                                        </div>
+                                        <div class="text-area">
+                                             {{review.review}}
+                                        </div>
+                                   </li>
+                              </ul>
+                              <div class="text-center" *ngIf="!reviews.length">
+                                   <h3>Atsiliepimų nėra</h3>
+                              </div>
+                              <div class="text-center" *ngIf="totalReviews > 5">
+                                   <button class="btn btn-primary" (click)="getReviews()">Visi atsiliepimai
+                                        ({{totalReviews}})</button>
+                              </div>
+                         </div>
+                    </tab>
+                    <tab heading="Rekomenduojame">
+                         <div class="product-details-tab-item"></div>
+                    </tab>
+                    <tab heading="Atsisiuntimai">
+                         <div class="product-details-tab-item">
+                              <a target="_blank"
+                                   href="{{productDetail.installation_instructions_pdf ? productDetail.installation_instructions_pdf : '#'}}"
+                                   class="btn  btn-primary mb-2 remove-bg">Parsisiųsti montavimo
+                                   instrukciją</a>
+                         </div>
+                    </tab>
+               </tabset>
+          </div>
+     </div>
+</section>
+<section class="sec-panasios">
+     <div class="container">
+          <h2 class="text-primary text-underline">Panašios prekės</h2>
+          <app-multiple-product-slider (productsuggestionmodal)="openProductModal($event)"
+               (wishlist)="addToWishlist($event)" [relatedProduct]="relatedProductList">
+          </app-multiple-product-slider>
+     </div>
+</section>
+<!-- Banner -->
+<section class="sec-banner">
+     <div class="container">
+          <div class="row">
+               <div class="col-md-4" *ngFor="let banner of banners;let i=index">
+                    <div class="mb-3 mb-md-0">
+                         <img class="" [src]="banner.banner_img" alt="Reklamjuostės vaizdas" />
+                    </div>
+               </div>
+          </div>
+     </div>
+</section>
+<!-- Banner -->
+<section class="sec-panasios">
+     <div class="container">
+          <h2 class="text-primary text-underline">Panašios prekės</h2>
+          <app-multiple-product-slider (productsuggestionmodal)="openProductModal($event)"
+               (wishlist)="addToWishlist($event)" [relatedProduct]="relatedProductList">
+          </app-multiple-product-slider>
+     </div>
+</section>
+<!-- info area -->
+<section class="sec-naudingi">
+     <div class="container">
+          <div class="row">
+               <div class="col-md-9">
+                    <h3 class="text-primary">Naudingi patarimai</h3>
+                    <p class="text-primary">Norint ilgus metus išlaikyti nekintančią dušo kabinos išvaizdą, nuolat
+                         reikia skirti
+                         bent šiek tiek dėmesio jos priežiūrai ir plovimo darbams – taip išvengsite nešvarumų kaupimosi
+                         ir išsaugosite
+                         tvarkingą vonios kambario atmosferą. Dušo
+                         kabinos valymas turėtų būti reguliarus, tačiau jeigu įsidėmėsite kelis pagrindinius patarimus
+                         ir žinosite
+                         svarbiausias gudrybes, su šia užduotimi susitvarkysite daug efektyviau.
+                    </p>
+               </div>
+               <div class="col-md-3">
+                    <button class="btn btn-primary btn-block">Skaityti daugiau</button>
+               </div>
+          </div>
+     </div>
+</section>
+<!-- ravak section -->
+<section class="sec-ravak" *ngIf="tips">
+     <div class="container">
+          <div class="row">
+               <div class="col-md-4 mb-3">
+                    <div class="ravak-area">
+                         <div class="ravak-name">{{tips.name}}</div>
+                         <div class="per">{{tips.percentage}}%</div>
+                         <div class="mt-auto">Naudok kodą : {{tips.code}}</div>
+                    </div>
+               </div>
+               <div class="col-md-4 mb-3">
+                    <div class="ravak-area">
+                         <img class="" [src]="tips.image" alt="Patarimai Vaizdas">
+                         <div class="tik">TIK €{{tips.price}}</div>
+                         <div class="mb-2">Akcijos kiekis ribotas</div>
+                         <button class="btn btn-offer" type="button" (click)="redirectToOrder()">Į krepšelį</button>
+                    </div>
+               </div>
+               <div class="col-md-4 mb-3">
+                    <div class="ravak-area">
+                         <div class="ravak-name">{{tips.name}}</div>
+                         <div class="per">{{tips.percentage}}%</div>
+                         <div class="mt-auto">Naudok kodą : {{tips.code}}</div>
+                    </div>
+               </div>
+          </div>
+     </div>
+</section>
+<!-- Start Newslatter -->
+<section class="sec-newslatter">
+     <div class="container">
+          <div class="row">
+               <div class="col-md-7">
+                    <h3 class="text-primary mb-3">Gaukite geriausius pasiūlymus pirmi!</h3>
+               </div>
+               <div class="col-md-5">
+                    <div class="newslatter-area">
+                         <input type="email" class="form-control" placeholder="Jūsų el.paštas">
+                         <button type="submit" class="btn btn-primary p-0">Prenumeruoti</button>
+                    </div>
+               </div>
+          </div>
+     </div>
+</section>
+<!-- End Newslatter -->
+
+<!-- Start Banner  -->
+<section class="sec-banner mb-4">
+     <div class="container">
+          <div class="row">
+               <div class="col-md-6">
+                    <div class="mb-3 mb-md-0">
+                         <img class="" src="assets/images/banner/banner-4.webp" alt="">
+                         <label class="text-danger comming-soon-text-left-side">Jau greitai</label>
+                    </div>
+               </div>
+               <div class="col-md-6">
+                    <div class="mb-3 mb-md-0">
+                         <img class="" src="assets/images/banner/banner-5.webp" alt="">
+                         <label class="text-danger comming-soon-text-right-side">Jau greitai</label>
+                    </div>
+               </div>
+          </div>
+     </div>
+</section>
+<!-- End Banner  -->
+
+<!-- Start Report Form -->
+<ng-template #template>
+     <div class="modal-header">
+          <h4 class="modal-title pull-left">Radote prekę pigiau?</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+               <span aria-hidden="true">&times;</span>
+          </button>
+     </div>
+     <div class="modal-body">
+          <div class="text-center mb-3">
+               <img class="" src="assets/images/discount.svg" alt="Nuolaidos vaizdas">
+          </div>
+          <form (submit)="onReportFormSubmit()" [formGroup]="reportForm">
+               <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                         <p class="text-center">
+                              Garantuojame geriausia produkto kainą savo puslapyje. Radote tokią pačia prekę pigiau?
+                              Praneškite!
+                         </p>
+                         <div class="form-group ">
+                              <input type="text" id="email" name="email" placeholder="El.pašto adresas"
+                                   class="form-control" formControlName="email" />
+                              <div class="invalid-feedback d-block"
+                                   *ngIf="reportForm.get('email').hasError('required') && (reportForm.get('email').touched || reportFormSubmitted)">
+                                   Įveskite el. Pašto adresą
+                              </div>
+                              <div class="invalid-feedback d-block"
+                                   *ngIf="reportForm.get('email').hasError('pattern') && (reportForm.get('email').touched || reportFormSubmitted)">
+                                   El. Paštas neteisingas
+                              </div>
+                         </div>
+                         <div class="form-group">
+                              <input type="text" id="phone" name="phone" placeholder="Telefono numeris"
+                                   class="form-control" formControlName="phone" />
+                              <div class="invalid-feedback d-block"
+                                   *ngIf="reportForm.get('phone').hasError('required') && (reportForm.get('phone').touched || reportFormSubmitted)">
+                                   Įveskite telefono numerį
+                              </div>
+                              <div class="invalid-feedback d-block"
+                                   *ngIf="reportForm.get('phone').hasError('pattern') && (reportForm.get('phone').touched || reportFormSubmitted)">
+                                   Įveskite tik numerį
+                              </div>
+                         </div>
+                         <div class="form-group">
+                              <input type="text" id="message" name="message" placeholder="Papasakokite plačiau"
+                                   class="form-control" formControlName="message" />
+                              <div class="invalid-feedback d-block"
+                                   *ngIf="reportForm.get('message').hasError('required') && (reportForm.get('message').touched || reportFormSubmitted)">
+                                   Įveskite pranešimą
+                              </div>
+                         </div>
+                         <div class="text-center mb-3">
+                              <label class="custom-checkbox mr-3">Susipažinau su taisyklėmis ir sąlygomis
+                                   <input type="checkbox" formControlName="terms" id="terms" name="terms"
+                                        formControlName="terms" />
+                                   <span class="checkmark"></span>
+                              </label>
+                              <div class="invalid-feedback d-block"
+                                   *ngIf="reportForm.get('terms').hasError('required') && (reportForm.get('terms').touched || reportFormSubmitted)">
+                                   Pasirinkite sąlygas ir sąlygas
+                              </div>
+                         </div>
+                         <div class="mb-3">
+                              <button class="btn btn-primary btn-block" type="submit">Pranešti</button>
+                         </div>
+                    </div>
+               </div>
+          </form>
+     </div>
+</ng-template>
+<!-- End Report Form -->
+
+<!-- Start Review Modal -->
+<ng-template #template1>
+     <form [formGroup]="reviewForm" (submit)="saveReview()">
+          <div class="modal-header">
+               <h4 class="modal-title pull-left">Atsiliepimas</h4>
+               <button type="button" class="close pull-right" aria-label="Close" (click)="closeReviewModal()">
+                    <span aria-hidden="true">&times;</span>
+               </button>
+          </div>
+          <div class="modal-body">
+               <div class="form-group">
+                    <div class="" *ngIf="successMessage">
+                         <p class="text-center text-success">{{successMessage}}</p>
+                    </div>
+                    <div class="" *ngIf="errorMessage">
+                         <p class="text-center" class="text-danger">{{errorMessage}}</p>
+                    </div>
+               </div>
+               <ng-container *ngIf="!isLoggedIn">
+                    <div class="form-group">
+                         <label>Vardas</label>
+                         <input type="text" name="name" id="name" placeholder="Vardas" title="Vardas"
+                              class="form-control" formControlName="name" />
+                         <div class="invalid-feedback d-block"
+                              *ngIf="reviewForm.get('name').hasError('required') && (reviewForm.get('name').touched || submitted)">
+                              Įveskite vardą
+                         </div>
+                    </div>
+                    <div class="form-group">
+                         <label>El.pašto adresas</label>
+                         <input type="text" name="email" id="email" placeholder="El.pašto adresas"
+                              title="El.pašto adresas" class="form-control" formControlName="email" />
+                         <div class="invalid-feedback d-block"
+                              *ngIf="reviewForm.get('email').hasError('required') && (reviewForm.get('email').touched || submitted)">
+                              Įveskite el. Pašto adresą
+                         </div>
+                         <div class="invalid-feedback d-block"
+                              *ngIf="reviewForm.get('email').hasError('pattern') && (reviewForm.get('email').touched || submitted)">
+                              Įveskite galiojantį el. Pašto adresą
+                         </div>
+                    </div>
+               </ng-container>
+               <div class="form-group">
+                    <label>Įvertinimas</label><br>
+                    <rating formControlName="rating" [max]="maxRating"></rating>
+                    <div class="invalid-feedback d-block"
+                         *ngIf="reviewForm.get('rating').hasError('required') && (reviewForm.get('rating').touched || submitted)">
+                         Įveskite įvertinimą
+                    </div>
+               </div>
+               <div class="form-group">
+                    <label>Atsiliepimas</label>
+                    <textarea name="review" id="review" placeholder="Atsiliepimas" title="Atsiliepimas"
+                         class="form-control" formControlName="review"></textarea>
+                    <div class="invalid-feedback d-block"
+                         *ngIf="reviewForm.get('review').hasError('required') && (reviewForm.get('review').touched || submitted)">
+                         Įveskite Atsiliepimas
+                    </div>
+               </div>
+               <div class="form-group">
+                    <button title="Sutaupyti" type="submit" class="btn btn-primary">Pateikti</button>
+               </div>
+          </div>
+     </form>
+</ng-template>
+<!-- End Review Modal -->
+
+<!-- Start Product Slider -->
+<ng-template #template2>
+     <div class="modal-body">
+          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef2.hide()">
+               <span aria-hidden="true">&times;</span>
+          </button><br><br>
+          <div class="company-slider">
+               <owl-carousel-o [options]="customOptions">
+                    <ng-template carouselSlide *ngFor="let image of productDetail.image;let i=index" [id]="i">
+                         <div class="text-center">
+                              <img [src]="image" width="100%" style="max-height: calc(100vh - 150px);" />
+                         </div>
+                    </ng-template>
+               </owl-carousel-o>
+          </div>
+     </div>
+
+</ng-template>
+<!-- End Product Slider -->
+
+<!-- Start Product Suggestion Modal  -->
+<ng-template #template3>
+     <div class="modal-body">
+          <button type="button" title="Uždaryti Modal" class="close pull-right" aria-label="Close"
+               (click)="closeProductSuggestionModal()">
+               <span aria-hidden="true">&times;</span>
+          </button>
+          <div class="text-center mb-3 mt-3">
+               <img class="" src="assets/images/discount.svg" alt="Nuolaidos vaizdas" title="Nuolaidos vaizdas" />
+          </div>
+          <h2 class="text-center mb-4">Kartu rekomenduojame isigyti</h2>
+          <div *ngFor="let product of suggestionProductList;let i=index"
+               class="align-items-center d-flex kartu-modal-list">
+               <div>
+                    <label class="custom-checkbox-1">
+                         <input type="checkbox" name="individual"
+                              (change)="onCheckSuggestionProduct($event.target.checked,i,product.id)">
+                         <span class="checkmark"></span>
+                    </label>
+               </div>
+               <div class="kartu-modal-list-image">
+                    <img class="" [src]="product.image[0]" alt="Produkto vaizdas" title="Produkto vaizdas" />
+               </div>
+               <div class="pl-2 pr-2">{{product.product_name}}</div>
+               <div class="kartu-modal-pricing ml-auto">€ {{product.price}}</div>
+          </div>
+          <div class="align-items-center d-flex kartu-modal-list bg-white">
+               <div class="pl-3 pr-3 text-right w-100"><b>Viso moketi</b></div>
+               <div class="kartu-modal-pricing ml-auto"><b>€ {{decimalNumber(selectedProductSuggestionTotal)}}</b></div>
+          </div>
+          <div class="row mt-4 mb-4 text-center">
+               <div class="col-md-12">
+                    <button class="btn btn-primary col-md-4" (click)="addToCartSuggestionProduct()" type="button"
+                         title="Į krepšelį">Į krepšelį</button>
+               </div>
+          </div>
+          <div class="row">
+               <div class="col-md-12 text-center">
+                    <label class="text-danger">{{productErrorMessage}}</label>
+               </div>
+          </div>
+     </div>
+</ng-template>
+<!-- End Product Suggestion Modal  -->

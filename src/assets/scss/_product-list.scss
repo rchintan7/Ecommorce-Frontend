@@ -1,0 +1,32 @@
+.products-list-area {
+    display: flex;
+    .products-list-left {
+        @include media-breakpoint-up(lg) {
+            padding-right: 30px;
+            padding-top: 50px;
+        }
+    }
+    .products-list-right {
+        width: 100%;
+    }
+}
+
+//form
+.select-product-cat {
+    background-color: #F9F6F6;
+    max-width: 300px;
+    margin-left: auto;
+    color: $primary;
+}
+
+.range-slider {
+    margin-bottom: 30px;
+    .ng5-slider .ng5-slider-selection {
+        background: #532270;
+        outline: none;
+    }
+    .ng5-slider .ng5-slider-pointer {
+        background-color: #532270;
+        outline: none;
+    }
+}

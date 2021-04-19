@@ -1,0 +1,51 @@
+<section class="content-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <h2 class="text-primary p-3 mb-0"> {{career.title}}</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="p-3" [innerHTML]="career.description">
+                </div>
+            </div>
+        </div>
+        <section class="sec-banner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3 mb-md-0" [routerLink]="['/order-list']">
+                            <img class="" src="assets/images/banner/banner-4.webp" alt="" />
+                            <label class="text-danger comming-soon-text-left-side">Jau greitai</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3 mb-md-0" [routerLink]="['/order-list']">
+                            <img class="" src="assets/images/banner/banner-5.webp" alt="" />
+                            <label class="text-danger comming-soon-text-right-side">Jau greitai</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="row">
+            <div class="col-md-12">
+                <div id="accordion" class="p-3">
+                    <div class="card career-section mt-3" *ngFor="let job of jobList;let i= index">
+                        <div class="card-header" id="heading1{{i}}">
+                            <h5 class="mb-0 faq-title">
+                                <button class="btn btn-link collapsed text-primary w-100 text-left"  data-toggle="collapse" [attr.data-target]="'#collapse1'+i" aria-expanded="false" [attr.aria-controls]="'#collapse1'+i">
+                                    {{job.title}}
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapse1{{i}}" class="collapse" [attr.aria-labelledby]="'#heading1'+i"  data-parent="#accordion">
+                            <div class="card-body" [innerHTML]="job.description"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

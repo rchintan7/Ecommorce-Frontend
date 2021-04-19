@@ -1,0 +1,19 @@
+<div class="product-slider main-banner-section">
+    <owl-carousel-o [options]="productSlider">
+        <ng-template carouselSlide *ngFor="let banner of bannerList; let i = index">
+            <div class="banner-textarea">
+              <label class="banner-title">{{banner.title}}</label>
+              <div class="banner-dec-time">
+                <div class="banner-dec">{{banner.description}}</div>
+                <div class="banner-time">{{banner.time}}</div>
+              </div>
+            </div>
+            <div class="text-center" [ngClass]="{'hide-button':i!=0}">
+                <a class="slider-contact-button button-center" routerLink="/kontaktai">Informacija</a>
+            </div>
+            <div class="text-center">                
+                <img [src]="defualtImage" [lazyLoad]="banner.banner_img" alt="Reklamjuostės vaizdas" title="Reklamjuostės vaizdas" />
+            </div>
+        </ng-template>
+    </owl-carousel-o>
+</div>

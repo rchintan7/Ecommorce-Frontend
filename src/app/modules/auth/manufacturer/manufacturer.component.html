@@ -1,0 +1,12 @@
+<section class="content-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <h2>Raskite savo mėgstamą gamintoją</h2>        
+                <div class="" *ngFor="let manufacturer of manufacturerList">
+                    <a (click)="redirect(manufacturer.manufacture)" href="javascript:void(0)">{{manufacturer.manufacture}}</a>
+                </div>        
+            </div>
+        </div>
+    </div>
+</section>

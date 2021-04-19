@@ -1,0 +1,66 @@
+<div class="non-auth-box">
+    <div class="non-auth-box-inner">
+        <form [formGroup]="registrationForm" (submit)="saveUser()">
+            <div class="form-group text-center">
+                <span *ngIf="errorMessage.length" class="validation-error pad-left-md">{{errorMessage}}</span>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="custom-radio-btn">
+                        <input type="radio" checked="checked" name="role" value="2" formControlName="role" title="Santechnikams" />
+                        <div class="checkmark">Santechnikams</div>
+                    </label>
+                </div>
+                <div class="col-md-4">
+                    <label class="custom-radio-btn">
+                        <input type="radio" name="role" value="3" formControlName="role" title="Privatiems/Juridiniams" />
+                        <div class="checkmark">Privatiems/Juridiniams</div>
+                    </label>
+                </div>
+                <div class="col-md-4">
+                    <label class="custom-radio-btn">
+                        <input type="radio" name="role" value="4" formControlName="role" title="Prekybininkams" />
+                        <div class="checkmark">Prekybininkams</div>
+                    </label>
+                </div>
+            </div>
+            <h2 class="text-center mt-3">Registracija</h2>
+            <div class="text-center mb-3 mt-3">
+                <input type="radio" value="1" id="userType1" name="userType" formControlName="userType" title="Fizinis asmuo" />&nbsp;
+                <label for="userType1">Fizinis asmuo</label>&nbsp;
+                <input type="radio" value="2" id="userType2" name="userType"  formControlName="userType" title="Juridinis asmuo" />&nbsp;
+                <label for="userType2">Juridinis asmuo</label> 
+            </div>
+            <div class="form-group custom-input">
+                <label for="email">El.pašto adresas</label>
+                <input autocomplete="off" type="email" class="form-control" name="email" formControlName="email" title="El.pašto adresas" />
+                <div class="invalid-feedback d-block" *ngIf="registrationForm.get('email').hasError('required') && (registrationForm.get('email').touched || submitted)">
+                    Būtinas el. pašto adresas
+                </div>
+                <div class="invalid-feedback d-block" *ngIf="registrationForm.get('email').hasError('pattern') && (registrationForm.get('email').touched || submitted)">
+                    El. Paštas neteisingas
+                </div>
+            </div>
+            <div class="form-group custom-input">
+                <label for="name">Vardas ir pavardė</label>
+                <input autocomplete="off" type="text" class="form-control"  name="name" formControlName="name" title="Vardas ir pavardė" />
+                <div class="invalid-feedback d-block" *ngIf="registrationForm.get('name').hasError('required') && (registrationForm.get('name').touched || submitted)">
+                    Būtinas vardas
+                </div>
+            </div>
+            <div class="form-group custom-input">
+                <label for="phone">Telefono numeris</label>
+                <input autocomplete="off" type="text" class="form-control" name="phone" formControlName="phone" title="Telefono numeris" />
+                <div class="invalid-feedback d-block" *ngIf="registrationForm.get('phone').hasError('required') && (registrationForm.get('phone').touched || submitted)">
+                    Būtinas telefono numeris
+                </div>
+            </div>
+            <div class="form-group custom-input">
+                <label for="password">Slaptažodis</label>
+                <input autocomplete="off" type="password" class="form-control" placeholder="********" name="password" formControlName="password" title="Slaptažodis" />
+                <div class="invalid-feedback d-block" *ngIf="registrationForm.get('password').hasError('required') && (registrationForm.get('password').touched || submitted)">Būtinas slaptažodis</div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block btn-submit btn-lg" title="Registruotis">Registruotis</button>
+        </form>
+    </div>
+</div>

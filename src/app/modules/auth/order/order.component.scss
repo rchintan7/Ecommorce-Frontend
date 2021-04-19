@@ -1,0 +1,40 @@
+.order-table {
+    .order-list-img {
+        max-width: 50px;
+    }
+    &.table th,
+    &.table td {
+        vertical-align: middle;
+    }
+}
+.apply-coupon-btn {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.custom-radio img {
+    width:120px;
+    height: 50px;
+}
+.without-user-login-button.active,
+.shipping-button.active {
+    box-shadow: 0 0 0 0.3rem rgba(109, 67, 133,0.7);
+}
+.custom-radio-btn-1 .checkmark {
+    padding: 11px 5px;
+    font-size: 12px;
+}
+.custom-radio-btn-1{
+    padding: 4px;
+}
+.without-user-login-button {
+  background-color: #FFF !important;
+  color: #532270 !important;
+}
+.address-list option {
+    color: #FFF;
+}
+.address-list {
+    background: #532270 !important;
+    color: #FFF;
+}

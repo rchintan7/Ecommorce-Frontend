@@ -1,0 +1,41 @@
+.category-description{
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 10px;
+}
+
+.image-gallarybox{
+    .image-gallarybox-imagearea{
+        height: 180px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img{
+            max-height: 160px;  
+            max-width: 100%;          
+        }
+    }
+}
+
+.pro-left-list-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.pro-left-list-title img{
+    padding-left: 15px;
+}
+.pro-left-list-title .title{
+    padding-left: 20px;
+    font-size: 18px;
+    line-height: 1.2;
+}
+
+.pro-left-list {
+    cursor: pointer;
+    margin: 10px 0;
+}
+.products-list-left .menu-link{
+    
+}
+

@@ -1,0 +1,533 @@
+<section class="content-wrapper">
+    <div class="container">
+        <!-- Link area -->
+        <div class="page-links">
+            <div class="row mb-2">
+                <div class="col-lg-3">
+                    <div class="side-menu">
+                        <!-- <button class="btn btn-style2 btn-all-goods btn-block text-left mb-0"><svg
+                                xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 38.999 40.058"
+                                class="mr-2">
+                                <defs>
+                                    <style>
+                                        .a {
+                                            fill: #fff;
+                                        }
+                                    </style>
+                                </defs>
+                                <g transform="translate(-5.224)">
+                                    <g transform="translate(5.224)">
+                                        <g transform="translate(0)">
+                                            <path
+                                                d="M10.417,146.286a5.193,5.193,0,1,0,5.193,5.193A5.193,5.193,0,0,0,10.417,146.286Zm0,8.266h0a3.073,3.073,0,1,1,3.073-3.073A3.073,3.073,0,0,1,10.417,154.552Z"
+                                                transform="translate(-5.224 -131.45)" class="a"></path>
+                                            <path
+                                                d="M157.712,187.037h-23.95a1.06,1.06,0,1,0,0,2.119h23.95a1.06,1.06,0,1,0,0-2.119Z"
+                                                transform="translate(-119.773 -168.068)" class="a"></path>
+                                            <path
+                                                d="M10.417,0a5.193,5.193,0,1,0,5.193,5.193A5.193,5.193,0,0,0,10.417,0Zm0,8.266A3.073,3.073,0,1,1,13.49,5.193,3.073,3.073,0,0,1,10.417,8.266Z"
+                                                transform="translate(-5.224)" class="a"></path>
+                                            <path
+                                                d="M133.762,42.87h23.95a1.06,1.06,0,1,0,0-2.119h-23.95a1.06,1.06,0,1,0,0,2.119Z"
+                                                transform="translate(-119.773 -36.618)" class="a"></path>
+                                            <path
+                                                d="M10.417,292.571a5.193,5.193,0,1,0,5.193,5.193A5.193,5.193,0,0,0,10.417,292.571Zm3.073,5.193a3.073,3.073,0,0,1-3.073,3.073h0a3.073,3.073,0,1,1,3.073-3.073Z"
+                                                transform="translate(-5.224 -262.898)" class="a"></path>
+                                            <path
+                                                d="M157.712,333.322h-23.95a1.06,1.06,0,1,0,0,2.119h23.95a1.06,1.06,0,1,0,0-2.119Z"
+                                                transform="translate(-119.773 -299.516)" class="a"></path>
+                                        </g>
+                                    </g>
+                                </g>
+                            </svg><span>Visos prekės</span></button>
+                        <ul class="side-menu-list" style="width: 100%;">
+                            <li *ngFor="let category of categories" (click)="showMore(category.slug)">
+                                <a class="menu-link">
+                                    <div><img class="" [src]="category.icon" alt="{{category.name}}" title="{{category.name}}"></div>
+                                    <div class="pl-3 menu-item-text">{{category.name}}</div>
+                                </a>
+                            </li>
+                        </ul> -->
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <button class="btn btn-style1 btn-block mb-2">Prekybos centras</button>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-style1 btn-block mb-2">Top pasiūlymai</button>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-style1 btn-block mb-2">Išparduotuvė</button>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-style1 btn-block mb-2">Išparduotuvė</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ./Link area -->
+        <div class="setting-tabbing-area">
+            <tabset type="pills" #staticTabs>
+                <!-- 1 -->
+                <tab heading="Profilis">
+                    <form [formGroup]="profile" (submit)="updateProfile()">
+                    <div class="d-flex flex-wrap mt-2">
+                        <h3 class="d-inline-block mr-3">Mano profilis</h3>
+                        <div class="mb-3">
+                            <label class="custom-checkbox mr-3">Fizinis asmuo
+                                <input type="checkbox" value="1" (change)="isChecked($event.target.checked,'1')" [checked]="checkElementExist('1')">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="custom-checkbox mr-3">Juridinis asmuo
+                                <input type="checkbox"  value="2" (change)="isChecked($event.target.checked,'2')"  [checked]="checkElementExist('2')">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <h3 class="d-inline-block ml-auto">Mano taškai : 38</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="text-danger" *ngIf="userTypeErrorMessage">{{userTypeErrorMessage}}</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <input type="text" name="name" formControlName="name" placeholder="Vardas ir Pavardė" class="form-control">
+                                    <div class="invalid-feedback d-block" *ngIf="profile.get('name').hasError('required') && (profile.get('name').touched || submitted)">
+                                        Būtinas laukas Pavadinimas
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <input type="text" name="phone" formControlName="phone" placeholder="Telefono numeris" class="form-control">
+                                    <div class="invalid-feedback d-block" *ngIf="profile.get('phone').hasError('required') && (profile.get('phone').touched || submitted)">
+                                        Būtina nurodyti telefono lauką
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <input type="text" name="address" formControlName="address" placeholder="Adresas" class="form-control">
+                                    <div class="invalid-feedback d-block" *ngIf="profile.get('address').hasError('required') && (profile.get('address').touched || submitted)">
+                                        Būtina užpildyti adreso lauką
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <input type="text" name="email" formControlName="email" placeholder="El.pašto adresas" class="form-control">
+                                    <div class="invalid-feedback d-block" *ngIf="profile.get('email').hasError('required') && (profile.get('email').touched || submitted)">
+                                        Būtinas el. Pašto adresas
+                                    </div>
+                                    <div class="invalid-feedback d-block" *ngIf="profile.get('email').hasError('pattern') && (profile.get('email').touched || submitted)">
+                                        El. Paštas neteisingas
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-primary btn-block" type="submit">Keisti</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div></form>
+                </tab>
+                <!-- 2 -->
+                <tab heading="Piniginė">
+                    <div class="d-flex flex-wrap mt-2">
+                        <h3 class="d-inline-block mr-3">Mano profilis</h3>
+                    </div>
+
+
+                    <div class="tabbing">
+                        <ul class="inner-tabbing-list">
+                            <li (click)="tabChange(1)" [ngClass]="{'active': selectedTab === 1}">
+                                <div class="tab-title">Parduodamų prekių</div>
+                                <div class="amount">3</div>
+                            </li>
+                            <li (click)="tabChange(2)" [ngClass]="{'active': selectedTab === 2}">
+                                <div class="tab-title">Parduotų prekių</div>
+                                <div class="amount">1</div>
+                            </li>
+                            <li (click)="tabChange(3)" [ngClass]="{'active': selectedTab === 3}">
+                                <div class="tab-title">Jūsų pirkinių istorija</div>
+                                <div class="amount">3</div>
+                            </li>
+                            <li (click)="tabChange(4)" [ngClass]="{'active': selectedTab === 4}">
+                                <div class="tab-title">Laukiama pinigų</div>
+                                <div class="amount">€250.00</div>
+                            </li>
+                            <li (click)="tabChange(5)" [ngClass]="{'active': selectedTab === 5}">
+                                <div class="tab-title">Pinigai jūsų piniginėje</div>
+                                <div class="amount">€250.00</div>
+                            </li>
+                        </ul>
+                        <!-- 1 -->
+                        <div *ngIf="selectedTab==1">
+                            <div class="table-responsive">
+                                <table class="table set-tabbing-table">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th scope="col">Prekė</th>
+                                            <th scope="col">Kaina</th>
+                                            <th scope="col">Kiekis</th>
+                                            <th scope="col">Statusas</th>
+                                            <th class="text-center" scope="col">Papildyti skelbimą</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <img class="pro-img" src="assets/images/products/product-1.webp" alt="">
+                                            </td>
+                                            <td>Lauko nuotekų vamzdis WAVIN DN 110 x 500 mm</td>
+                                            <td>€250.00</td>
+                                            <td>1</td>
+                                            <td>
+                                                <div class="text-success">Aktyvus</div>
+                                            </td>
+                                            <td class="text-center">
+                                                <button class="btn edit-btn">
+                                                    <img class="" src="assets/images/icons/edit.svg" alt="">
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- 2 -->
+                        <div *ngIf="selectedTab==2">
+                            <div class="table-responsive">
+                                <table class="table set-tabbing-table">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th scope="col">Prekė</th>
+                                            <th scope="col">Kaina</th>
+                                            <th scope="col">Kiekis</th>
+                                            <th scope="col">Statusas</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <img class="pro-img" src="assets/images/products/product-1.webp" alt="">
+                                            </td>
+                                            <td>Lauko nuotekų vamzdis WAVIN DN 110 x 500 mm</td>
+                                            <td>€250.00</td>
+                                            <td>1</td>
+                                            <td>
+                                                <div class="text-success">Aktyvus</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <img class="pro-img" src="assets/images/products/product-1.webp" alt="">
+                                            </td>
+                                            <td>Lauko nuotekų vamzdis WAVIN DN 110 x 500 mm</td>
+                                            <td>€250.00</td>
+                                            <td>1</td>
+                                            <td>
+                                                <div class="text-warning">Laukiama išmokėjimo</div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- 3 -->
+                        <div *ngIf="selectedTab==3">
+                            <div class="table-responsive">
+                                <table class="table set-tabbing-table">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th scope="col">Prekė</th>
+                                            <th scope="col">Kaina</th>
+                                            <th scope="col">Kiekis</th>
+                                            <th scope="col">Statusas</th>
+                                            <th class="text-center" scope="col">Kartoti pirkimą</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <img class="pro-img" src="assets/images/products/product-1.webp" alt="">
+                                            </td>
+                                            <td>Lauko nuotekų vamzdis WAVIN DN 110 x 500 mm</td>
+                                            <td>€250.00</td>
+                                            <td>1</td>
+                                            <td>
+                                                <div class="text-success">Nupirkta</div>
+                                            </td>
+                                            <td class="text-center">
+                                                <button class="btn btn-primary">Pirkti</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <img class="pro-img" src="assets/images/products/product-1.webp" alt="">
+                                            </td>
+                                            <td>Lauko nuotekų vamzdis WAVIN DN 110 x 500 mm</td>
+                                            <td>€250.00</td>
+                                            <td>1</td>
+                                            <td>
+                                                <div class="text-success">Nupirkta</div>
+                                            </td>
+                                            <td class="text-center">
+                                                <button class="btn btn-primary">Pirkti</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- 4 -->
+                        <div *ngIf="selectedTab==4">
+                            <div class="table-responsive">
+                                <table class="table set-tabbing-table">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th scope="col">Prekė</th>
+                                            <th scope="col">Kaina</th>
+                                            <th scope="col">Kiekis</th>
+                                            <th scope="col">Statusas</th>
+                                            <th class="text-center" scope="col">Papildyti skelbimą</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <img class="pro-img" src="assets/images/products/product-1.webp" alt="">
+                                            </td>
+                                            <td>Lauko nuotekų vamzdis WAVIN DN 110 x 500 mm</td>
+                                            <td>€250.00</td>
+                                            <td>1</td>
+                                            <td>
+                                                <div class="text-warning">Laukiama išmokėjimo</div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                          <!-- 5 -->
+                        <div *ngIf="selectedTab==5">
+                            <div class="table-responsive">
+                                <table class="table set-tabbing-table">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th scope="col">Prekė</th>
+                                            <th scope="col">Kaina</th>
+                                            <th scope="col">Kiekis</th>
+                                            <th scope="col">Statusas</th>
+                                            <th class="text-center" scope="col">Papildyti skelbimą</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <img class="pro-img" src="assets/images/products/product-1.webp" alt="">
+                                            </td>
+                                            <td>Lauko nuotekų vamzdis WAVIN DN 110 x 500 mm</td>
+                                            <td>€250.00</td>
+                                            <td>1</td>
+                                            <td>
+                                                <div class="text-success">Pinigai jūsų piniginėje</div>
+                                            </td>
+                                            <td class="text-center">
+                                                <button class="btn btn-primary">Pirkti</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <img class="pro-img" src="assets/images/products/product-1.webp" alt="">
+                                            </td>
+                                            <td>Lauko nuotekų vamzdis WAVIN DN 110 x 500 mm</td>
+                                            <td>€250.00</td>
+                                            <td>1</td>
+                                            <td>
+                                                <div class="text-success">Pinigai jūsų piniginėje</div>
+                                            </td>
+                                            <td class="text-center">
+                                                <button class="btn btn-primary">Pirkti</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </tab>
+                <!-- 3 -->
+                <tab heading="Skelbimai">
+                    <div class="d-flex flex-wrap mt-4">
+                        <h3 class="d-inline-block mr-3">Įkelk darbą</h3>
+                        <button class="btn btn-primary ml-auto mb-2">Mano skelbimai</button>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <input type="text" id="" placeholder="Skelbimo pavadinimas" class="form-control">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <input type="text" id="" placeholder="Siūlomas atlygis" class="form-control">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <input type="text" id="" placeholder="Darbo vieta , adresas" class="form-control">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <input type="text" id="" placeholder="Raktažodžiai" class="form-control">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <textarea class="form-control" id="" rows="3"
+                                        placeholder="Papasakok plačiau"></textarea>
+                                </div>
+                            </div>
+                            <div class="row align-items-center mb-3">
+                                <div class="col-lg-auto">
+                                    <h4>Pridėk nuotrauką</h4>
+                                </div>
+                                <div class="col-lg">
+                                    <div class="d-inline-block mr-3 va-t">
+                                        <div class="select-file-image-preview" (click)="filePicker1.click()">
+                                            <input class="d-none" type="file" #filePicker1
+                                                (change)="onImagePicked($event,1)">
+                                            <img [src]="imagePreview1" [alt]="">
+                                            <i *ngIf="!imagePreview1" class="fas fa-plus"></i>
+                                        </div>
+                                    </div>
+                                    <div class="d-inline-block mr-3 va-t">
+                                        <div class="select-file-image-preview" (click)="filePicker2.click()">
+                                            <input class="d-none" type="file" #filePicker2
+                                                (change)="onImagePicked($event, 2)">
+                                            <img [src]="imagePreview2" [alt]="">
+                                            <i *ngIf="!imagePreview2" class="fas fa-plus"></i>
+                                        </div>
+                                    </div>
+                                    <div class="d-inline-block mr-3 va-t">
+                                        <div class="select-file-image-preview" (click)="filePicker3.click()">
+                                            <input class="d-none" type="file" #filePicker3
+                                                (change)="onImagePicked($event, 3)">
+                                            <img [src]="imagePreview3" [alt]="">
+                                            <i *ngIf="!imagePreview3" class="fas fa-plus"></i>
+                                        </div>
+                                    </div>
+                                    <div class="d-inline-block va-t">
+                                        <div class="select-file-image-preview" (click)="filePicker4.click()">
+                                            <input class="d-none" type="file" #filePicker4
+                                                (change)="onImagePicked($event, 4)">
+                                            <img [src]="imagePreview4" [alt]="">
+                                            <i *ngIf="!imagePreview4" class="fas fa-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button class="btn btn-primary btn-block">Pridėti</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </tab>
+                <!-- 4 -->
+                <tab heading="Darbų lenta"></tab>
+                <!-- 5 -->
+                <tab heading="Įkelti naudotas prekes">
+                    <div class="d-flex flex-wrap mt-4">
+                        <h3 class="d-inline-block mr-3">Parduok naudotą prekę</h3>
+                        <button class="btn btn-primary ml-auto mb-2">Mano skelbimai</button>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <input type="text" id="" placeholder="Prekės pavadinimas" class="form-control">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <input type="text" id="" placeholder="Kaina" class="form-control">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <input type="text" id="" placeholder="Buveinės adresas" class="form-control">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <input type="text" id="" placeholder="Raktažodžiai" class="form-control">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <textarea class="form-control" id="" rows="3"
+                                        placeholder="Papasakok plačiau"></textarea>
+                                </div>
+                            </div>
+                            <div class="row align-items-center mb-3">
+                                <div class="col-lg-auto">
+                                    <h4>Pridėk nuotrauką</h4>
+                                </div>
+                                <div class="col-lg">
+                                    <div class="d-inline-block mr-3 va-t">
+                                        <div class="select-file-image-preview" (click)="filePicker1.click()">
+                                            <input class="d-none" type="file" #filePicker1
+                                                (change)="onImagePicked($event,1)">
+                                            <img [src]="imagePreview1" [alt]="">
+                                            <i *ngIf="!imagePreview1" class="fas fa-plus"></i>
+                                        </div>
+                                    </div>
+                                    <div class="d-inline-block mr-3 va-t">
+                                        <div class="select-file-image-preview" (click)="filePicker2.click()">
+                                            <input class="d-none" type="file" #filePicker2
+                                                (change)="onImagePicked($event, 2)">
+                                            <img [src]="imagePreview2" [alt]="">
+                                            <i *ngIf="!imagePreview2" class="fas fa-plus"></i>
+                                        </div>
+                                    </div>
+                                    <div class="d-inline-block mr-3 va-t">
+                                        <div class="select-file-image-preview" (click)="filePicker3.click()">
+                                            <input class="d-none" type="file" #filePicker3
+                                                (change)="onImagePicked($event, 3)">
+                                            <img [src]="imagePreview3" [alt]="">
+                                            <i *ngIf="!imagePreview3" class="fas fa-plus"></i>
+                                        </div>
+                                    </div>
+                                    <div class="d-inline-block va-t">
+                                        <div class="select-file-image-preview" (click)="filePicker4.click()">
+                                            <input class="d-none" type="file" #filePicker4
+                                                (change)="onImagePicked($event, 4)">
+                                            <img [src]="imagePreview4" [alt]="">
+                                            <i *ngIf="!imagePreview4" class="fas fa-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="custom-checkbox mr-3">Susipažinau su taisyklėmis ir sąlygomis
+                                    <input type="checkbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="custom-checkbox mr-3">Noriu gauti naujausius pasiūlymus apie prekes
+                                    <input type="checkbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button class="btn btn-primary btn-block">Pridėti</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </tab>
+            </tabset>
+        </div>
+    </div>
+</section>
+
+<!-- <div [hidden]="!loading">
+	<div class="modal-wrapper"></div>
+	<i class="fa fa-spinner pos" [ngClass]="{'fa-pulse':loading}"></i>
+</div> -->

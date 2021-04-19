@@ -1,0 +1,278 @@
+<section class="">
+    <div class="container">
+        <div class="home-slider pt-0">
+            <div class="home-slider-left"></div>
+            <div class="home-slider-right">
+                <div class="mb-4">
+                    <app-product-slider [bannerList]="mainBannerSection"></app-product-slider>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="container">
+    <div class="row">
+        <div class="col-xl-3 col-md-6 mb-3" *ngFor="let icon of iconList">
+            <div class="info-box justify-content-center">
+                <img class="info-box-img"  [src]="defualtImage" [lazyLoad]="icon.logo" alt="icon" />
+                <div class="info-box-textarea">
+                    <div class="text-top">{{icon.title}}</div>
+                    <div class="text-bottom">{{icon.sub_title}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Company slider -->
+<section class="container">
+    <div class="mb-4 mt-4">
+        <app-company-slider [companyLogos]="companyLogos"></app-company-slider>
+    </div>
+</section>
+<!-- Company slider -->
+<section class="sec-banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4" *ngFor="let banner of banners">
+                <div class="mb-3 mb-md-0">
+                    <img  [src]="defualtImage" [lazyLoad]="banner.banner_img" alt="" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- <section class="overflow-hidden">
+    <div class="container">
+        <h3 class="text-primary mb-4">Klientų atsiliepimai</h3>
+        <div class="row">
+            
+            <div class="col-xl-2-5 col-lg-3 col-md-4 col-sm-6 mb-3" *ngFor="let product of specialOfferProducts;let i=index">
+                <div class="product-box">
+                    <div class="color-area text-center">
+                        <div class="color-area-inner" style="border-bottom: 1px solid {{product.product_label_color}}">
+                            <label class="text-white m-0" style="background-color:{{product.product_label_color}}">{{product.product_label}}</label>
+                        </div>
+                    </div>
+                    <div class="wishlist-section">
+                        <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!product.isWishlistAdded" (click)="addToWishlist(product.isWishlistAdded,product.id,'specialOfferProducts',i)" width="28" height="29" viewBox="0 0 40.052 35.634">
+                            <path id="heart" d="M20.026,35.634a2.349,2.349,0,0,1-1.548-.582c-1.618-1.415-3.178-2.744-4.554-3.917l-.007-.006A84.7,84.7,0,0,1,3.973,21.8C1.262,18.525,0,15.424,0,12.037a12.518,12.518,0,0,1,3.177-8.55A10.77,10.77,0,0,1,11.189,0a10.074,10.074,0,0,1,6.293,2.172,12.875,12.875,0,0,1,2.544,2.657,12.876,12.876,0,0,1,2.545-2.657A10.074,10.074,0,0,1,28.864,0a10.771,10.771,0,0,1,8.012,3.487,12.518,12.518,0,0,1,3.177,8.55c0,3.387-1.262,6.488-3.972,9.758a84.69,84.69,0,0,1-9.943,9.333c-1.379,1.175-2.941,2.506-4.563,3.924a2.35,2.35,0,0,1-1.548.581ZM11.189,2.346A8.45,8.45,0,0,0,4.9,5.078a10.183,10.183,0,0,0-2.556,6.959c0,2.849,1.059,5.4,3.433,8.261a83.35,83.35,0,0,0,9.659,9.045l.007.006c1.382,1.177,2.948,2.512,4.578,3.937,1.64-1.428,3.208-2.765,4.592-3.944A83.371,83.371,0,0,0,34.274,20.3c2.374-2.864,3.433-5.412,3.433-8.261A10.183,10.183,0,0,0,35.15,5.078a8.449,8.449,0,0,0-6.287-2.731,7.781,7.781,0,0,0-4.858,1.682A11.385,11.385,0,0,0,21.3,7.161a1.481,1.481,0,0,1-2.544,0,11.374,11.374,0,0,0-2.707-3.133,7.781,7.781,0,0,0-4.858-1.682Zm0,0" transform="translate(0 0)" fill="#754e8c"/>
+                          </svg>
+                        <i class="fa fa-heart fa-2x text-right wishlist-icon active" *ngIf="product.isWishlistAdded" (click)="addToWishlist(product.isWishlistAdded,product.id,'specialOfferProducts',i)"></i>
+                    </div>
+                    <div class="secure-image-section">
+                        <div *ngFor="let icon of product.icon_list">
+                            <img [src]="defualtImage" [lazyLoad]="icon.icon" alt="{{icon.icon_text}}" title="{{icon.icon_text}}" />
+                        </div>
+                    </div>
+                    <div class="product-image-slider">
+                        <owl-carousel-o [options]="customOptions">
+                            <ng-template carouselSlide *ngFor="let image of product.image">
+                                <div></div>
+                                <div class="text-center">
+                                    <img  [src]="defualtImage"  [lazyLoad]="image" (click)="redirectToProductDetails(product,1)" />
+                                </div>
+                            </ng-template>
+                        </owl-carousel-o>
+                    </div>
+                    <div class="text-center product-name" (click)="redirectToProductDetails(product,1)">
+                        {{product.name}}
+                    </div>
+                    <div class="product-box-price d-flex">
+                        <div class="col-md-6 p-0">
+                            <ng-continer *ngIf="!(product.comparision_price==0.00 || product.comparision_price==0)">
+                                <sub class="amount strike-through">{{product.comparision_price}} €</sub>
+                                <div class="amount text-danger">{{product.price}} €</div>
+                            </ng-continer>
+                            <ng-continer *ngIf="(product.comparision_price==0.00 || product.comparision_price==0)">
+                                <div class="amount">{{product.price}} €</div>
+                            </ng-continer>
+                        </div>
+                        <div class="rating product-rating col-md-6  p-0">
+                            <rating [(ngModel)]="product.rating" [max]="maxRating" [readonly]="isReadOnly"></rating>
+                        </div>
+                    </div>
+                    <div class="">
+                      <button class="btn btn-primary" (click)="redirectToProductDetails(product,0)"  type="button">Į krepšelį</button>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</section> -->
+<section class="sec-product-list-box">
+    <div class="title-with-star">
+        <div class="sec-title-product-list">Malonus aptarnavimas, mažiau patyrusiems duoda patarimų dėl medžiagų parinkimo. Esu labai patenkintas parinktomis grindinio šildymo medžiagomis nors montuoju pirmą kartą. Konkurencingos kainos. Rekomenduoju. Mantas</div>
+        <div class="stars-list">
+            <img src="assets/images/icons/star.svg" alt="Žvaigždė" />
+            <img src="assets/images/icons/star.svg" alt="Žvaigždė" />
+            <img src="assets/images/icons/star.svg" alt="Žvaigždė" />
+            <img src="assets/images/icons/star.svg" alt="Žvaigždė" />
+            <img src="assets/images/icons/star.svg" alt="Žvaigždė" />
+        </div>
+    </div>
+    <div class="container search-results" #searchResults>
+        <div class="pro-box bg-white" *ngFor="let categorySection of categorySections;let ind = index">
+            <div class="row">
+                <div class="col-xl-2 border-right mb-3 mb-xl-0">
+                    <div class="pro-left-list-title">
+                        <img [src]="defualtImage"  [lazyLoad]="categorySection.icon" alt="Kategorijos piktograma" />
+                        <div class="title text-primary">{{categorySection.name}}</div>
+                    </div>
+                    <ul class="pro-left-list">
+                        <li class="text-primary" *ngFor="let subCategory of categorySection.children" (click)="redirectToProductList(categorySection.slug,categorySection.id,subCategory.id,subCategory.is_parent_category)">
+                            {{subCategory.name}}
+                        </li>
+                    </ul>
+                    <div class="pro-left-btn">
+                        <button class="btn btn-primary btn-block" (click)="showMore(categorySection.slug)">
+                            Rodyti daugiau
+                        </button>
+                    </div>
+                </div>
+                <div class="col-xl-8">
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 mb-3" *ngFor="let product of categorySection.products;let i=index">
+                            <div class="small-product-box">
+                                
+                                <div class="wishlist-section">
+                                    <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!product.isWishlistAdded" (click)="addToWishlist(product.isWishlistAdded,product.id,'',i,ind)" width="28" height="29" viewBox="0 0 40.052 35.634">
+                                        <path id="heart" d="M20.026,35.634a2.349,2.349,0,0,1-1.548-.582c-1.618-1.415-3.178-2.744-4.554-3.917l-.007-.006A84.7,84.7,0,0,1,3.973,21.8C1.262,18.525,0,15.424,0,12.037a12.518,12.518,0,0,1,3.177-8.55A10.77,10.77,0,0,1,11.189,0a10.074,10.074,0,0,1,6.293,2.172,12.875,12.875,0,0,1,2.544,2.657,12.876,12.876,0,0,1,2.545-2.657A10.074,10.074,0,0,1,28.864,0a10.771,10.771,0,0,1,8.012,3.487,12.518,12.518,0,0,1,3.177,8.55c0,3.387-1.262,6.488-3.972,9.758a84.69,84.69,0,0,1-9.943,9.333c-1.379,1.175-2.941,2.506-4.563,3.924a2.35,2.35,0,0,1-1.548.581ZM11.189,2.346A8.45,8.45,0,0,0,4.9,5.078a10.183,10.183,0,0,0-2.556,6.959c0,2.849,1.059,5.4,3.433,8.261a83.35,83.35,0,0,0,9.659,9.045l.007.006c1.382,1.177,2.948,2.512,4.578,3.937,1.64-1.428,3.208-2.765,4.592-3.944A83.371,83.371,0,0,0,34.274,20.3c2.374-2.864,3.433-5.412,3.433-8.261A10.183,10.183,0,0,0,35.15,5.078a8.449,8.449,0,0,0-6.287-2.731,7.781,7.781,0,0,0-4.858,1.682A11.385,11.385,0,0,0,21.3,7.161a1.481,1.481,0,0,1-2.544,0,11.374,11.374,0,0,0-2.707-3.133,7.781,7.781,0,0,0-4.858-1.682Zm0,0" transform="translate(0 0)" fill="#754e8c"/>
+                                    </svg>
+                                    <i class="fa fa-heart fa-2x text-right wishlist-icon active" *ngIf="product.isWishlistAdded" (click)="addToWishlist(product.isWishlistAdded,product.id,'',i,ind)"></i>
+                                </div>
+                                <div class="secure-image-section">
+                                    <div *ngFor="let icon of product.icon_list;let i=index">
+                                        <img [src]="defualtImage" [lazyLoad]="icon.icon" alt="{{icon.icon_text}}" title="{{icon.icon_text}}" />
+                                    </div>
+                                </div>
+                                <div class="product-image-slider">
+                                    <owl-carousel-o [options]="customOptions">
+                                        <ng-template carouselSlide *ngFor="let image of product.image">
+                                            <div></div>
+                                            <div class="text-center mb-3 pro-image-area">
+                                                <img [src]="defualtImage" [lazyLoad]="image" alt="" (click)="redirectToProductDetails(product,1)" />
+                                            </div>
+                                        </ng-template>
+                                    </owl-carousel-o>
+                                </div>
+                                <div class="color-area ">
+                                    <div class="color-area-inner" style="border-bottom: 1px solid {{product.product_label_color}}">
+                                        <label class="text-white m-0" style="background-color:{{product.product_label_color}}">{{product.product_label}}</label>
+                                    </div>
+                                </div><br>
+                                <div class="text-center product-name" (click)="redirectToProductDetails(product,1)">{{product.product_name}}</div>
+                                <div class="product-box-price row text-center">
+                                    <div class="col-md-6 p-0">
+                                        <ng-continer *ngIf="!(product.comparision_price==0.00 || product.comparision_price==0)">
+                                            <sub class="amount strike-through">{{product.comparision_price}} €</sub>
+                                            <div class="amount text-danger">{{product.price}} €</div>
+                                        </ng-continer>
+                                        <ng-continer *ngIf="(product.comparision_price==0.00 || product.comparision_price==0)">
+                                            <div class="amount">{{product.price}} €</div>
+                                        </ng-continer>
+                                    </div>
+                                    <div class="rating product-rating col-md-6  p-0">
+                                        <rating [(ngModel)]="product.rating" [max]="maxRating" [readonly]="isReadOnly"></rating>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <button class="btn btn-primary" (click)="redirectToProductDetails(product,0)"  type="button">Į krepšelį</button>
+                                </div>
+                                <!-- <div class="color-area">
+                                    <div class="color-area-inner" style="border-bottom: 1px solid {{product.product_label_color}};">
+                                        <label class="text-white m-0" style="background-color:{{product.product_label_color}}">{{product.product_label}}</label>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-2 align-self-center">
+                    <div class="text-center">
+                        <img [src]="defualtImage"  [lazyLoad]="categorySection.image" alt="Produkto vaizdas" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- newslatter -->
+<section class="sec-newslatter">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7">
+                <h3 class="text-primary mb-3">Gaukite geriausius pasiūlymus pirmi!</h3>
+            </div>
+            <div class="col-md-5">
+                <div class="newslatter-area">
+                    <input type="email" class="form-control" placeholder="Jūsų el.paštas" />
+                    <button type="submit" class="btn btn-primary p-0">Prenumeruoti</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Banner -->
+<section class="sec-banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3 mb-md-0" [routerLink]="['/order-list']">
+                    <img src="assets/images/banner/banner-4.webp" alt="" />
+                    <label class="text-danger comming-soon-text-left-side">Jau greitai</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3 mb-md-0" [routerLink]="['/order-list']">
+                    <img  src="assets/images/banner/banner-5.webp" alt="" />
+                    <label class="text-danger comming-soon-text-right-side">Jau greitai</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Start Product Suggestion Modal  -->
+<ng-template #template3>
+    <div class="modal-body">
+         <button type="button" title="Uždaryti Modal" class="close pull-right" aria-label="Close"
+              (click)="closeProductSuggestionModal()">
+              <span aria-hidden="true">&times;</span>
+         </button>
+         <div class="text-center mb-3 mt-3">
+              <img class="" src="assets/images/discount.svg" alt="Nuolaidos vaizdas" title="Nuolaidos vaizdas" />
+         </div>
+         <h2 class="text-center mb-4">Kartu rekomenduojame isigyti</h2>
+         <div *ngFor="let product of suggestionProductList;let i=index"
+              class="align-items-center d-flex kartu-modal-list">
+              <div>
+                   <label class="custom-checkbox-1">
+                        <input type="checkbox" name="individual" (change)="onCheckSuggestionProduct($event.target.checked,i,product.id)" />
+                        <span class="checkmark"></span>
+                   </label>
+              </div>
+              <div class="kartu-modal-list-image">
+                   <img class="" [src]="product.image[0]" alt="Produkto vaizdas" title="Produkto vaizdas" />
+              </div>
+              <div class="pl-2 pr-2">{{product.product_name}}</div>
+              <div class="kartu-modal-pricing ml-auto">€ {{product.price}}</div>
+         </div>
+         <div class="align-items-center d-flex kartu-modal-list bg-white">
+              <div class="pl-3 pr-3 text-right w-100"><b>Viso moketi</b></div>
+              <div class="kartu-modal-pricing ml-auto"><b>€ {{decimalNumber(selectedProductSuggestionTotal)}}</b></div>
+         </div>
+         <div class="row mt-4 mb-4 text-center">
+              <div class="col-md-12">
+                <button class="btn btn-primary col-md-4" (click)="addToCartSuggestionProduct()" type="button" title="Į krepšelį">Į krepšelį</button>
+              </div>
+         </div>
+         <div class="row">
+              <div class="col-md-12 text-center">
+                   <label class="text-danger">{{productErrorMessage}}</label>
+              </div>
+         </div>
+    </div>
+</ng-template>
+<!-- End Product Suggestion Modal  -->

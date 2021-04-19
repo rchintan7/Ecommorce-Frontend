@@ -1,0 +1,28 @@
+.btn-black {
+    background-color: #000000;
+    border-color: #000000;
+}
+
+.btn:focus,
+.btn.focus {
+    box-shadow: none
+}
+
+.btn-style1 {
+    background: #EFEFF0;
+    color: #532270;
+    border: 0;
+    @include media-breakpoint-up(lg) {
+        min-height: 45px;
+    }
+}
+
+.btn-style2 {
+    background: #969696;
+    color: #ffffff;
+    border: 0;
+    @include media-breakpoint-up(lg) {
+        min-height: 70px;
+        font-size: 20px;
+    }
+}

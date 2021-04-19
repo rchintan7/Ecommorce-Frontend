@@ -1,0 +1,47 @@
+<section class="">
+	<div class="container">
+		<div class="products-list-area row">
+			<div class="products-list-left col-xl-3 col-lg-4">
+				<div class="pro-left-list-title">
+					<img alt="Kategorijos piktograma" [src]="categoryDetails.image" />
+					<div class="title text-primary">{{categoryDetails.name}}</div>
+				</div>
+				<ng-container *ngFor="let subCategory of subCategories">
+					<div class="pro-left-list">
+						<a class="menu-link" (click)="redirectToProductList(subCategory)">
+							<div class="pl-3 menu-item-text">{{subCategory.name}}</div>
+						</a>
+					</div>
+				</ng-container>
+			</div>
+			<div class="products-list-right col-xl-9 col-lg-8">
+				<div class="row">
+					<div class="col-md-12">
+						<div [innerHTML]="categoryDetails.name"></div><br>
+					</div>
+				</div>
+				<div class="row">
+					<ng-container *ngIf="!subCategories?.length && !loading">
+						<div class="w-100">
+							<h5 class="text-center">Kategorija nerasta</h5>
+						</div>
+					</ng-container>
+					<ng-container *ngIf="subCategories?.length">
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 mb-3" *ngFor="let subCategory of subCategories">
+							<div class="product-box image-gallarybox">
+								<div class="product-image-slider">
+									<div class="text-center image-gallarybox-imagearea">
+										<img [src]="subCategory.image" alt="Pogrupio vaizdas" (click)="redirectToProductList(subCategory)" />
+									</div>
+								</div>
+								<div class="text-center product-name" (click)="redirectToProductList(subCategory)">
+									{{subCategory.name}}
+								</div>
+							</div>
+						</div>
+					</ng-container>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

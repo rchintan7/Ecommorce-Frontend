@@ -1,0 +1,281 @@
+.navbar-brand {
+    @include media-breakpoint-up(md) {
+        min-width: 278px;
+    }
+    @include media-breakpoint-up(xl) {
+        min-width: 350px;
+    }
+}
+
+.logo {
+    max-width: 180px;
+    @include media-breakpoint-up(md) {
+        max-width: 250px;
+    }
+    @include media-breakpoint-up(xl) {
+        max-width: 340px;
+    }
+}
+
+.search-area {
+    background-color: #F9F6F6;
+    display: flex;
+    border-radius: 4px;
+    height: 60px;
+    align-items: center;
+    padding: 10px 16px;
+    input {
+        border: none;
+        background: transparent;
+        font-size: 14px;
+        &:focus {
+            background: transparent;
+        }
+        @include media-breakpoint-up(sm) {
+            width: 100% !important;
+        }
+    }
+    select {
+        border: none;
+        background: transparent;
+        color: $primary;
+        font-size: 14px;
+        max-width: 200px;
+        margin-left: auto;
+        padding:.375rem 0rem;
+        &:focus {
+            background: transparent;
+        }
+    }
+}
+
+.menu-c-link {
+    background: #F9F9F9;
+    border-radius: 4px;
+    padding: 10px 20px;
+    color: $primary;
+    max-height: 40px;
+    margin-left: 10px;
+    &.icon {
+        padding: 10px 10px;
+    }
+    &>img {
+        max-height: 20px;
+    }
+    @include media-breakpoint-up(sm) {
+        margin-left: 15px;
+    }
+}
+
+//cu-drop
+.cu-drop {
+    padding: 0;
+    .cu-drop-inner {
+        display: flex;
+        background: #F9F9F9;
+        border-radius: 4px;
+        color: #532270;
+        height: 40px;
+        padding: 0 20px 0 10px;
+        position: relative;
+        @include media-breakpoint-up(md) {
+            width: 180px;
+            min-width: 180px;
+            height: 60px;
+        }
+        &::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 5px;
+            width: 0;
+            height: 0;
+            border-top: 8px solid #754E8C;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            margin-top: -4px;
+        }
+        img {
+            height: 18px;
+            @include media-breakpoint-up(md) {
+                height: 24px;
+            }
+        }
+        svg {
+            width: 22px;
+            @include media-breakpoint-up(md) {
+                width: 32px;
+            }
+        }
+        .cu-drop-text-area {
+            padding-left: 10px;
+        }
+    }
+    .dropdown-menu {
+        position: absolute;
+        padding: 10px 20px 20px;
+        @include media-breakpoint-up(sm) {
+            min-width: 250px;
+        }
+        .btn-light {
+            margin: 10px 0;
+        }
+        .btn-primary {}
+    }
+    .dropdown-menu.logout {
+        position: relative !important;
+        top: 30px !important;
+        left: 30px !important;
+        padding: 10px 20px 20px;
+        @include media-breakpoint-up(sm) {
+            min-width: 250px;
+            left: -80px !important;
+        }
+    }
+}
+
+//menu-hemburger-icon
+.menu-hemburger-icon {
+    height: 40px;
+    width: 35px;
+    position: relative;
+    &::before {
+        content: "";
+        position: absolute;
+        top: 13px;
+        left: 7px;
+        height: 4px;
+        background: #532270;
+        width: 20px;
+        z-index: 1;
+        border-radius: 2px;
+    }
+    &::after {
+        content: "";
+        position: absolute;
+        top: 24px;
+        left: 7px;
+        height: 4px;
+        background: #532270;
+        width: 20px;
+        z-index: 1;
+        border-radius: 2px;
+    }
+}
+
+//head-cart-area
+.head-cart-area {
+    // position: relative;
+    .head-cart-droparea {
+        /* padding: 10px 15px 10px;
+        font-size: 0.875rem;
+        color: #212529;
+        text-align: left;
+        list-style: none;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        border-radius: 0.25rem;
+        position: absolute;
+        right: 0;
+        top: 50px;
+        z-index: 9;
+        width: 250px;
+        max-height: 300px;
+        overflow-y: auto;
+        display: none; */
+        &.open {
+            display: block;
+        }
+        .table {
+            margin-bottom: 0;
+            font-size: 12px;
+            th,
+            td {
+                padding: 0.5rem;
+                border-top: none;
+            }
+            .head-cart-product-img {
+                max-width: 30px;
+            }
+            .head-cart-btn-close {
+                width: 30px;
+            }
+        }
+        .head-cart-total {
+            text-align: center;
+            font-size: 12px;
+        }
+        .spausdinti-text {
+            font-size: 12px;
+            text-align: center;
+            .head-cart-pdf-img {
+                max-width: 18px;
+                margin-left: 10px;
+            }
+        }
+    }
+}
+
+.slider-top-btn {
+    display: block;
+    color: $primary;
+    background: #F2F2F2;
+    border-radius: 4px;
+    text-align: center;
+    padding: 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    min-height: 40px;
+    &:hover {
+        text-decoration: none;
+    }
+    img {
+        max-height: 19px;
+    }
+    label {
+        font-size: 10px;
+    }
+    @include media-breakpoint-up(md) {
+        min-height: 70px;
+    }
+}
+
+.wishlist-btn {
+    display: flex;
+    background: #F9F9F9;
+    border-radius: 4px;
+    color: #532270;
+    height: 40px;
+    padding: 0 10px 0 10px;
+    position: relative;
+    align-items: center;
+    @include media-breakpoint-up(md) {
+        width: 180px;
+        min-width: 180px;
+        height: 60px;
+        padding: 0 20px 0 10px;
+    }
+    svg {
+        width: 24px;
+        @include media-breakpoint-down(sm) {
+            height: 29px;
+            width: 20px;
+        }
+    }
+}
+
+.btn-icon-in-header {
+    min-width: 60px;
+}
+
+.btn-menu-home {
+    @include media-breakpoint-up(lg) {
+        min-height: 70px;
+        font-size: 20px;
+    }
+    svg {
+        width: 30px;
+        height: 30px;
+    }
+}

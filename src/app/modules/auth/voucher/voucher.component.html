@@ -1,0 +1,110 @@
+<section class="content-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <h2>Pirkti dovanų kuponą</h2>
+                <p>Dovanų kuponas bus išsiųstas nurodytu el. paštu, kai tik gausime apmokėjimą.</p>
+            </div>
+        </div>
+        <form>
+        <div class="row">
+                <div class="col-md-12">
+                    <form [formGroup]="voucherForm" (submit)="onFormSubmit()">
+                        <div class="form-group row">
+                            <label for="recipient_name" class="col-sm-2 col-form-label">Gavėjo vardas</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="name" id="recipient_name" formControlName="recipient_name" class="form-control" />                    
+                                <div class="invalid-feedback d-block"
+                                *ngIf="voucherForm.get('recipient_name').hasError('required') && (voucherForm.get('recipient_name').touched || submitted)">
+                                Įveskite gavėjo vardą                            
+                            </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="recipient_email" class="col-sm-2 col-form-label">Gavėjo el. paštas</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="recipient_email" id="recipient_email" formControlName="recipient_email" class="form-control" />
+                                <div class="invalid-feedback d-block" *ngIf="voucherForm.get('recipient_email').hasError('required') && (voucherForm.get('recipient_email').touched || submitted)">
+                                    Įveskite el. Pašto adresą
+                                </div>
+                                <div class="invalid-feedback d-block" *ngIf="voucherForm.get('recipient_email').hasError('pattern') && (voucherForm.get('recipient_email').touched || submitted)">
+                                    Įveskite galiojantį el. Pašto adresą
+                                </div>   
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-sm-2 col-form-label">Jūsų vardas</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="name" id="name" formControlName="name" class="form-control" />
+                                <div class="invalid-feedback d-block" *ngIf="voucherForm.get('name').hasError('required') && (voucherForm.get('name').touched || submitted)">
+                                    Įveskite vardą                           
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="email" class="col-sm-2 col-form-label">Jūsų el. paštas</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="email" id="email"  formControlName="email" class="form-control">
+                                <div class="invalid-feedback d-block" *ngIf="voucherForm.get('email').hasError('required') && (voucherForm.get('email').touched || submitted)">
+                                    Įveskite el. Pašto adresą
+                                </div>
+                                <div class="invalid-feedback d-block" *ngIf="voucherForm.get('email').hasError('pattern') && (voucherForm.get('email').touched || submitted)">
+                                    Įveskite galiojantį el. Pašto adresą
+                                </div>   
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="voucher_type" class="col-sm-2 col-form-label">Kupono tema</label>
+                            <div class="col-sm-10">
+                                <div class="radio">
+                                    <label><input type="radio"  name="voucher_type"  (change)="onChange('Birthday')"  value="Birthday"  checked>&nbsp;Birthday</label>
+                                  </div>
+                                  <div class="radio">
+                                    <label><input type="radio" name="voucher_type" (change)="onChange('Christmas')"  value="Christmas">&nbsp;Christmas</label>
+                                  </div>
+                                  <div class="radio">
+                                    <label><input type="radio" name="voucher_type" (change)="onChange('General')"  value="General">&nbsp;General</label>
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="message" class="col-sm-2 col-form-label">Žinutė gavėjui</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="message" name="message" formControlName="message" class="form-control" />
+                                <div class="invalid-feedback d-block" *ngIf="voucherForm.get('message').hasError('required') && (voucherForm.get('message').touched || submitted)">
+                                    Įveskite vardą
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="amount" class="col-sm-2 col-form-label">Kupono suma</label>
+                            <div class="col-sm-10">
+                                <input type="number" name="amount" id="amount" formControlName="amount"  class="form-control" />
+                                <div class="invalid-feedback d-block" *ngIf="voucherForm.get('amount').hasError('required') && (voucherForm.get('amount').touched || submitted)">
+                                    Įveskite pranešimą
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <div class="float-right"> 
+                                    Aš suprantu, kad dovanų kuponų pinigai nėra grąžinami.                        
+                                    <input type="checkbox" name="agree" formControlName="agree">
+                                    <div class="invalid-feedback d-block" *ngIf="voucherForm.get('agree').hasError('required') && (voucherForm.get('agree').touched || submitted)">
+                                        Pasirinkite sąlygos sąlygą
+                                    </div>
+                                    &nbsp;
+                        <input type="submit" value="Tęsti" class="btn btn-primary">
+                      </div>
+                            </div>
+                        </div>
+                      </form>
+                </div>
+        </div>
+    </form>
+    </div>
+</section>
+<!-- <div [hidden]="!loading">
+    <div class="modal-wrapper"></div>
+    <i class="fa fa-spinner pos" [ngClass]="{'fa-pulse':loading}"></i>
+</div> -->

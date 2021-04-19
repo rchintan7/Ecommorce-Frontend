@@ -1,0 +1,1587 @@
+<!-- <section class="content-wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive">
+          <table class="table order-table">
+            <thead>
+              <tr>
+                <th>Vaizdas</th>
+                <th scope="col">Prekė</th>
+                <th scope="col">Garantija</th>
+                <th scope="col">Draudimas</th>
+                <th scope="col">Kaina</th>
+                <th scope="col">Kiekis</th>
+                <th scope="col">Viso mokėti</th>
+                <th>Veiksmas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of items;let i=index">
+                <td><img class="order-list-img" src="{{item.product.image}}" alt="" /></td>
+                <td>{{item.product.name}}</td>
+                <td>
+                  <span *ngIf="!item.product.warrantyYear">-</span>
+                  <span *ngIf="item.product.warrantyYear" class="text-center">{{item.product.warrantyYear}} Metai</span>
+                </td>
+                <td>
+                  <span *ngIf="!item.product.insuranceYear">-</span>
+                  <span *ngIf="item.product.insurancePrice" class="text-center">{{item.product.insuranceYear}}
+                    Metai</span>
+                </td>
+                <td>€{{decimalNumber(item.product.price)}}</td>
+                <td>
+                  <div class="ordre-item-incres">
+                    <button class="btn btn-minus" type="button"
+                      (click)="decreaseProductQuantity(i,item.quantity,item.id)">
+                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                        id="Capa_1" x="0px" y="0px" viewBox="0 0 409.6 409.6"
+                        style="enable-background:new 0 0 409.6 409.6;" xml:space="preserve" width="20px" height="20px">
+                        <g>
+                          <g>
+                            <g>
+                              <path
+                                d="M392.533,187.733H17.067C7.641,187.733,0,195.374,0,204.8s7.641,17.067,17.067,17.067h375.467    c9.426,0,17.067-7.641,17.067-17.067S401.959,187.733,392.533,187.733z"
+                                data-original="#000000" class="active-path" data-old_color="#000000" fill="#532270" />
+                            </g>
+                          </g>
+                        </g>
+                      </svg>
+                    </button>
+                    <div class="num">{{item.quantity}}</div>
+                    <button class="btn btn-plus" type="button"
+                      (click)="increaseProductQuantity(i,item.quantity,item.id)">
+                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                        id="Capa_1" x="0px" y="0px" viewBox="0 0 409.6 409.6"
+                        style="enable-background:new 0 0 409.6 409.6;" xml:space="preserve" width="20px" height="20px">
+                        <g>
+                          <g>
+                            <g>
+                              <path
+                                d="M392.533,187.733H221.867V17.067C221.867,7.641,214.226,0,204.8,0s-17.067,7.641-17.067,17.067v170.667H17.067    C7.641,187.733,0,195.374,0,204.8s7.641,17.067,17.067,17.067h170.667v170.667c0,9.426,7.641,17.067,17.067,17.067    s17.067-7.641,17.067-17.067V221.867h170.667c9.426,0,17.067-7.641,17.067-17.067S401.959,187.733,392.533,187.733z"
+                                data-original="#000000" class="active-path" data-old_color="#000000" fill="#532270" />
+                            </g>
+                          </g>
+                        </g>
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+                <td class="text-right">€{{decimalNumber(item.product.price * item.quantity)}}</td>
+                <td>
+                  <ng-container *ngFor="let tag of item.product.tags">
+                    <button class="btn btn-primary btn-sm">{{tag}}</button> &nbsp;
+                  </ng-container>
+                </td>
+              </tr>
+              <tr *ngIf="!items.length">
+                <td colspan="8" class="text-center">Jūsų krepšelis šiuo metu tuščias</td>
+              </tr>
+              <tr *ngIf="applyShiipingCharge && items.length">
+                <th colspan="5" class="text-center">
+                  Siuntimo mokestis
+                </th>
+                <td></td>
+                <td class="text-right">+ €{{decimalNumber(shppingCharge)}}</td>
+                <td></td>
+              </tr>
+              <tr *ngIf="items.length">
+                <th colspan="5" class="text-center">
+                  Kaina
+                </th>
+                <th>{{totalQuantity}}</th>
+                <td class="text-right">€{{decimalNumber(totalPrice)}}</td>
+                <td></td>
+              </tr>
+              <tr *ngIf="isDiscountApply && items.length">
+                <th colspan="5" class="text-center">
+                  Kaina su nuolaida({{discountPercentage}}%)
+                </th>
+                <td></td>
+                <td class="text-right">- €{{decimalNumber(discountPrice)}}</td>
+                <td></td>
+              </tr>
+              <tr *ngIf="isDiscountApply && items.length">
+                <th colspan="5" class="text-center">
+                  Visa kaina
+                </th>
+                <td></td>
+                <td class="text-right">€{{decimalNumber(totalDiscountPrice)}}</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div><hr>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-4 float-right">
+          <div class="input-group mb-3">
+          <input type="text" id="couponCode" placeholder="Turite nuolaidos kodą?" class="form-control" title="Turite nuolaidos kodą?" name="couponCode" [(ngModel)]="couponCode">
+          <div class="input-group-append">
+            <span class="input-group-text" id="basic-addon2 cursor" (click)="applyCouponCode()">Taikyti</span>
+          </div>
+          </div>
+          <label *ngIf="couponCodeErrorMessage" class='text-danger'>{{couponCodeErrorMessage}}</label>
+          <label *ngIf="couponCodeSuccessMessage" class='text-success'>{{couponCodeSuccessMessage}}</label>
+        </div>
+      </div>
+    </div>
+
+    <ng-container *ngIf="!isLogin">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <form (submit)="login()" [formGroup]="loginForm">
+                <div class="form-group">
+                  <h3>Registruotiems vartotojams</h3>
+                </div>
+                <div class="form-group" *ngIf="errorMessage">
+                  <span class="validation-error pad-left-md">{{errorMessage}}</span>
+                </div>
+                <div class="form-group">
+                  <input type="email" formControlName="email" class="form-control" id="email" name="email"
+                    placeholder="Jūsų el pašto adresas" />
+                  <div class="invalid-feedback d-block"
+                    *ngIf="loginForm.get('email').hasError('required') && (loginForm.get('email').touched || submitted)">
+                    Įveskite el. Pašto adresą
+                  </div>
+                  <div class="invalid-feedback d-block"
+                    *ngIf="loginForm.get('email').hasError('email') && (loginForm.get('email').touched || submitted)">
+                    Įveskite galiojantį el. Pašto adresą
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input type="password" formControlName="password" class="form-control" id="password" name="password"
+                    placeholder="Slaptažodis" />
+                  <div class="invalid-feedback d-block"
+                    *ngIf="loginForm.get('password').hasError('required') && (loginForm.get('password').touched || submitted)">
+                    Slaptažodžio laukas yra privalomas
+                  </div>
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-primary btn-block" type="submit">Prisijungti</button>
+                </div>
+              </form>
+            </div>
+            <div class="col-md-8">
+              <form (submit)="register()" [formGroup]="registerForm">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h3>Neregistruotiems vartotojams</h3>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12" *ngIf="registerErrorMessage">
+                    <span class="validation-error pad-left-md">{{registerErrorMessage}}</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="custom-radio-btn-1 col-md-4">
+                      <input type="radio" checked="checked" name="role" value="2" formControlName="role">
+                      <div class="checkmark">Santechnikams</div>
+                    </label>
+                    <label class="custom-radio-btn-1  col-md-4">
+                      <input type="radio" name="role" value="3" formControlName="role">
+                      <div class="checkmark">Privatiems/Juridiniams</div>
+                    </label>
+                    <label class="custom-radio-btn-1  col-md-4">
+                      <input type="radio" name="role" value="4" formControlName="role">
+                      <div class="checkmark">Prekybininkams</div>
+                    </label>
+                  </div>
+                  <div class="col-md-6 text-center">
+                    <label class="custom-checkbox-1 mr-3">Fizinis asmuo
+                      <input type="checkbox" name="individual"
+                        (change)="onChangeUserType($event.target.checked,'Individual')">
+                      <span class="checkmark"></span>
+                    </label>
+                    <label class="custom-checkbox-1">Juridinis asmuo
+                      <input type="checkbox" name="legalPerson"
+                        (change)="onChangeUserType($event.target.checked,'LegalPerson')">
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <input type="text" class="form-control" formControlName="name" id="name" name="name"
+                        placeholder="Vardas ir pavardė" />
+                      <div class="invalid-feedback d-block"
+                        *ngIf="registerForm.get('name').hasError('required') && (registerForm.get('name').touched || registerSubmitted)">
+                        Įveskite vardą
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <input type="password" class="form-control" formControlName="password" id="password"
+                        name="password" placeholder="Slaptažodis">
+                      <div class="invalid-feedback d-block"
+                        *ngIf="registerForm.get('password').hasError('required') && (registerForm.get('password').touched || registerSubmitted)">
+                        Slaptažodžio laukas yra privalomas
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <input type="text" class="form-control" formControlName="email" id="email" name="email"
+                        placeholder="Jūsų el pašto adresas" />
+                      <div class="invalid-feedback d-block"
+                        *ngIf="registerForm.get('email').hasError('required') && (registerForm.get('email').touched || registerSubmitted)">
+                        Įveskite el. Pašto adresą
+                      </div>
+                      <div class="invalid-feedback d-block"
+                        *ngIf="registerForm.get('email').hasError('email') && (registerForm.get('email').touched || registerSubmitted)">
+                        Įveskite galiojantį el. Pašto adresą
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control" formControlName="phone" id="phone" name="phone"
+                        placeholder="Telefonas">
+                      <div class="invalid-feedback d-block"
+                        *ngIf="registerForm.get('phone').hasError('required') && (registerForm.get('phone').touched || registerSubmitted)">
+                        Įveskite telefoną
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <button class="btn btn-primary btn-block" type="submit">Registruotis</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <div class="row mb-4" *ngIf="!isLogin">
+      <div class="col-md-4">
+        <button (click)="withOutLoign=!withOutLoign" [ngClass]="{'active':withOutLoign}"
+          class="btn btn-primary without-user-login-button btn-block ">Pirkti be registracijos</button>
+      </div>
+    </div>
+    <ng-container *ngIf="withOutLoign">
+      <tabset #staticTabs>
+        <tab heading="Fizinis asmuo" (selectTab)="changeTab(1)">
+          <div class="row form-group mt-2">
+            <div class="col-md-4">
+              <label for="name">Vardas</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.name" class="form-control" name="name" id="name"
+                placeholder="Vardas" title="Vardas" />
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.name.length && withOutLoginSubmitted">
+                Įveskite vardą</div>
+            </div>
+            <div class="col-md-4">
+              <label for="surname">Pavardė</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.surname" class="form-control" name="surname" id="surname"
+                placeholder="Pavardė" title="Pavardė" />
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.surname.length  && withOutLoginSubmitted">
+                Įveskite pavardę</div>
+            </div>
+            <div class="col-md-4">
+              <label for="email">El. Paštas</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.email" class="form-control" name="email" id="email"
+                placeholder="El. Paštas" title="El. Paštas" />
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.email.length && withOutLoginSubmitted">
+                Įveskite el. Pašto adresą</div>
+              <div class="invalid-feedback d-block" *ngIf="emailValidate(withoutLoginForm.email)">Prašome įvesti
+                galiojantį elektroninio pašto adresą</div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-4">
+              <label for="phone_number">Telefonas</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.phoneNumber" class="form-control" name="phoneNumber"
+                id="phoneNumber" placeholder="Telefonas" title="Telefonas" />
+              <div class="invalid-feedback d-block"
+                *ngIf="!withoutLoginForm.phoneNumber.length && withOutLoginSubmitted">Įveskite telefono numerį</div>
+            </div>
+            <div class="col-md-4">
+              <label for="address">Gatvės pavadinimas</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.address" class="form-control" name="address" id="address"
+                placeholder="Gatvės pavadinimas" title="Gatvės pavadinimas" />
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.address.length && withOutLoginSubmitted">
+                Įveskite adresą</div>
+            </div>
+            <div class="col-md-4">
+              <label for="houseNumber">Namo Nr</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.houseNumber" class="form-control" name="houseNumber"
+                id="houseNumber" placeholder="Namo Nr" title="Namo Nr" />
+              <div class="invalid-feedback d-block"
+                *ngIf="!withoutLoginForm.houseNumber.length && withOutLoginSubmitted">Įveskite namo numerį</div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-4">
+              <label for="city">Miestas</label>
+              <select [(ngModel)]="withoutLoginForm.city" class="form-control" name="city" id="city"
+                placeholder="Miestas" title="Miestas">
+                <option value="" selected disabled>Miestas</option>
+                <option value="Vilniaus m. sav.">Vilniaus m. sav.</option>
+                <option value="Kauno m. sav.">Kauno m. sav.</option>
+                <option value="Klaipėdos m. sav.">Klaipėdos m. sav.</option>
+                <option value="Panevėžio m. sav.">Panevėžio m. sav.</option>
+                <option value="Šiaulių m. sav.">Šiaulių m. sav.</option>
+                <option value="Akmenės r. sav.">Akmenės r. sav.</option>
+                <option value="Alytaus m. sav.">Alytaus m. sav.</option>
+                <option value="Alytaus r. sav.">Alytaus r. sav.</option>
+                <option value="Anykščių r. sav.">Anykščių r. sav.</option>
+                <option value="Birštono sav.">Birštono sav.</option>
+                <option value="Biržų r. sav.">Biržų r. sav.</option>
+                <option value="Druskininkų sav.">Druskininkų sav.</option>
+                <option value="Elektrėnų sav.">Elektrėnų sav.</option>
+                <option value="Ignalinos r. sav.">Ignalinos r. sav.</option>
+                <option value="Jonavos r. sav.">Jonavos r. sav.</option>
+                <option value="Joniškio r. sav.">Joniškio r. sav.</option>
+                <option value="Jurbarko r. sav.">Jurbarko r. sav.</option>
+                <option value="Kaišiadorių r. sav.">Kaišiadorių r. sav.</option>
+                <option value="Kalvarijos sav.">Kalvarijos sav.</option>
+                <option value="Kauno r. sav.">Kauno r. sav.</option>
+                <option value="Kazlų Rūdos sav.">Kazlų Rūdos sav.</option>
+                <option value="Kėdainių r. sav.">Kėdainių r. sav.</option>
+                <option value="Kelmės r. sav.">Kelmės r. sav.</option>
+                <option value="Klaipėdos r. sav.">Klaipėdos r. sav.</option>
+                <option value="Kretingos r. sav.">Kretingos r. sav.</option>
+                <option value="Kupiškio r. sav.">Kupiškio r. sav.</option>
+                <option value="Lazdijų r. sav.">Lazdijų r. sav.</option>
+                <option value="Marijampolės sav.">Marijampolės sav.</option>
+                <option value="Mažeikių r. sav.">Mažeikių r. sav.</option>
+                <option value="Molėtų r. sav.">Molėtų r. sav.</option>
+                <option value="Neringos sav.">Neringos sav.</option>
+                <option value="Pagėgių sav.">Pagėgių sav.</option>
+                <option value="Pakruojo r. sav.">Pakruojo r. sav.</option>
+                <option value="Palangos m. sav.">Palangos m. sav.</option>
+                <option value="Panevėžio r. sav.">Panevėžio r. sav.</option>
+                <option value="Pasvalio r. sav.">Pasvalio r. sav.</option>
+                <option value="Plungės r. sav.">Plungės r. sav.</option>
+                <option value="Prienų r. sav.">Prienų r. sav.</option>
+                <option value="Radviliškio r. sav.">Radviliškio r. sav.</option>
+                <option value="Raseinių r. sav.">Raseinių r. sav.</option>
+                <option value="Rietavo sav.">Rietavo sav.</option>
+                <option value="Rokiškio r. sav.">Rokiškio r. sav.</option>
+                <option value="Skuodo r. sav.">Skuodo r. sav.</option>
+                <option value="Šakių r. sav.">Šakių r. sav.</option>
+                <option value="Šalčininkų r. sav.">Šalčininkų r. sav.</option>
+                <option value="Šiaulių r. sav.">Šiaulių r. sav.</option>
+                <option value="Šilalės r. sav.">Šilalės r. sav.</option>
+                <option value="Šilutės r. sav.">Šilutės r. sav.</option>
+                <option value="Širvintų r. sav.">Širvintų r. sav.</option>
+                <option value="Švenčionių r. sav.">Švenčionių r. sav.</option>
+                <option value="Tauragės r. sav.">Tauragės r. sav.</option>
+                <option value="Telšių r. sav.">Telšių r. sav.</option>
+                <option value="Trakų r. sav.">Trakų r. sav.</option>
+                <option value="Ukmergės r. sav.">Ukmergės r. sav.</option>
+                <option value="Utenos r. sav.">Utenos r. sav.</option>
+                <option value="Varėnos r. sav.">Varėnos r. sav.</option>
+                <option value="Vilkaviškio r. sav.">Vilkaviškio r. sav.</option>
+                <option value="Vilniaus r. sav.">Vilniaus r. sav.</option>
+                <option value="Visagino sav.">Visagino sav.</option>
+                <option value="Zarasų r. sav.">Zarasų r. sav.</option>
+              </select>
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.city.length && withOutLoginSubmitted">
+                Įveskite miestą</div>
+            </div>
+            <div class="col-md-4">
+              <label for="postcode">Pašto kodas</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.postcode" class="form-control" name="postcode"
+                id="postcode" placeholder="Pašto kodas" title="Pašto kodas" />
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.postcode.length && withOutLoginSubmitted">
+                Įveskite pašto kodą</div>
+            </div>
+            <div class="col-md-4">
+              <label for="zone_id">Regionas</label>
+              <select class="form-control" [(ngModel)]="withoutLoginForm.zoneId" name="zoneId" id="zoneId"
+                placeholder="Prašome pasirinkti" title="Prašome pasirinkti">
+                <option value="" selected disabled> --- Prašome pasirinkti --- </option>
+                <option value="Alytus">Alytus</option>
+                <option value="Kaunas">Kaunas</option>
+                <option value="Klaipeda">Klaipeda</option>
+                <option value="Marijampole">Marijampole</option>
+                <option value="Panevezys">Panevezys</option>
+                <option value="Siauliai">Siauliai</option>
+                <option value="Taurage">Taurage</option>
+                <option value="Telsiai">Telsiai</option>
+                <option value="Utena">Utena</option>
+                <option value="Vilnius">Vilnius</option>
+              </select>
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.postcode.length && withOutLoginSubmitted">
+                Įveskite regionas</div>
+            </div>
+          </div>
+        </tab>
+        <tab heading="Juridinis asmuo" (selectTab)="changeTab(2)">
+          <div class="row form-group mt-2">
+            <div class="col-md-4">
+              <label for="firm">Įmonė</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.firm" class="form-control" name="firm" id="firm"
+                placeholder="Įmonė" title="Įmonė" />
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.firm.length && withOutLoginSubmitted">
+                Įveskite Įmonė</div>
+            </div>
+            <div class="col-md-4">
+              <label for="companyCode">Įmonės kodas</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.companyCode" class="form-control" name="companyCode"
+                id="companyCode" placeholder="Įmonės kodas" title="Įmonės kodas" />
+              <div class="invalid-feedback d-block"
+                *ngIf="!withoutLoginForm.companyCode.length && withOutLoginSubmitted">Įveskite įmonės kodą</div>
+            </div>
+            <div class="col-md-4">
+              <label for="vatCode">PVM Kodas</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.vatCode" class="form-control" name="vatCode"
+                id="vatCode  " placeholder="PVM Kodas" title="PVM Kodas" />
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.vatCode.length && withOutLoginSubmitted">
+                Įveskite PVM kodą</div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-4">
+              <label for="name">Vardas</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.name" class="form-control" name="name" id="name"
+                placeholder="Vardas" title="Vardas" />
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.name.length && withOutLoginSubmitted">
+                Įveskite vardą</div>
+            </div>
+            <div class="col-md-4">
+              <label for="surname">Pavardė</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.surname" class="form-control" name="surname" id="surname"
+                placeholder="Pavardė" title="Pavardė" />
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.surname.length && withOutLoginSubmitted">
+                Įveskite pavardę</div>
+            </div>
+            <div class="col-md-4">
+              <label for="email">El. Paštas</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.email" class="form-control" name="email" id="email"
+                placeholder="El. Paštas" title="El. Paštas" />
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.email.length && withOutLoginSubmitted">
+                Įveskite el. Pašto adresą</div>
+              <div class="invalid-feedback d-block" *ngIf="emailValidate(withoutLoginForm.email)">Prašome įvesti
+                galiojantį elektroninio pašto adresą</div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-4">
+              <label for="phone_number">Telefonas</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.phoneNumber" class="form-control" name="phoneNumber"
+                id="phoneNumber" placeholder="Telefonas" title="Telefonas" />
+              <div class="invalid-feedback d-block"
+                *ngIf="!withoutLoginForm.phoneNumber.length && withOutLoginSubmitted">Įveskite telefono numerį</div>
+            </div>
+            <div class="col-md-4">
+              <label for="address">Gatvės pavadinimas</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.address" class="form-control" name="address" id="address"
+                placeholder="Gatvės pavadinimas" title="Gatvės pavadinimas" />
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.address.length && withOutLoginSubmitted">
+                Įveskite adresą</div>
+            </div>
+            <div class="col-md-4">
+              <label for="houseNumber">Namo Nr</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.houseNumber" class="form-control" name="houseNumber"
+                id="houseNumber" placeholder="Namo Nr" title="Namo Nr" />
+              <div class="invalid-feedback d-block"
+                *ngIf="!withoutLoginForm.houseNumber.length && withOutLoginSubmitted">Įveskite namo numerį</div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-4">
+              <label for="city">Miestas</label>
+              <select [(ngModel)]="withoutLoginForm.city" class="form-control" name="city" id="city"
+                placeholder="Miestas" title="Miestas">
+                <option value="" selected disabled>Miestas</option>
+                <option value="Vilniaus m. sav.">Vilniaus m. sav.</option>
+                <option value="Kauno m. sav.">Kauno m. sav.</option>
+                <option value="Klaipėdos m. sav.">Klaipėdos m. sav.</option>
+                <option value="Panevėžio m. sav.">Panevėžio m. sav.</option>
+                <option value="Šiaulių m. sav.">Šiaulių m. sav.</option>
+                <option value="Akmenės r. sav.">Akmenės r. sav.</option>
+                <option value="Alytaus m. sav.">Alytaus m. sav.</option>
+                <option value="Alytaus r. sav.">Alytaus r. sav.</option>
+                <option value="Anykščių r. sav.">Anykščių r. sav.</option>
+                <option value="Birštono sav.">Birštono sav.</option>
+                <option value="Biržų r. sav.">Biržų r. sav.</option>
+                <option value="Druskininkų sav.">Druskininkų sav.</option>
+                <option value="Elektrėnų sav.">Elektrėnų sav.</option>
+                <option value="Ignalinos r. sav.">Ignalinos r. sav.</option>
+                <option value="Jonavos r. sav.">Jonavos r. sav.</option>
+                <option value="Joniškio r. sav.">Joniškio r. sav.</option>
+                <option value="Jurbarko r. sav.">Jurbarko r. sav.</option>
+                <option value="Kaišiadorių r. sav.">Kaišiadorių r. sav.</option>
+                <option value="Kalvarijos sav.">Kalvarijos sav.</option>
+                <option value="Kauno r. sav.">Kauno r. sav.</option>
+                <option value="Kazlų Rūdos sav.">Kazlų Rūdos sav.</option>
+                <option value="Kėdainių r. sav.">Kėdainių r. sav.</option>
+                <option value="Kelmės r. sav.">Kelmės r. sav.</option>
+                <option value="Klaipėdos r. sav.">Klaipėdos r. sav.</option>
+                <option value="Kretingos r. sav.">Kretingos r. sav.</option>
+                <option value="Kupiškio r. sav.">Kupiškio r. sav.</option>
+                <option value="Lazdijų r. sav.">Lazdijų r. sav.</option>
+                <option value="Marijampolės sav.">Marijampolės sav.</option>
+                <option value="Mažeikių r. sav.">Mažeikių r. sav.</option>
+                <option value="Molėtų r. sav.">Molėtų r. sav.</option>
+                <option value="Neringos sav.">Neringos sav.</option>
+                <option value="Pagėgių sav.">Pagėgių sav.</option>
+                <option value="Pakruojo r. sav.">Pakruojo r. sav.</option>
+                <option value="Palangos m. sav.">Palangos m. sav.</option>
+                <option value="Panevėžio r. sav.">Panevėžio r. sav.</option>
+                <option value="Pasvalio r. sav.">Pasvalio r. sav.</option>
+                <option value="Plungės r. sav.">Plungės r. sav.</option>
+                <option value="Prienų r. sav.">Prienų r. sav.</option>
+                <option value="Radviliškio r. sav.">Radviliškio r. sav.</option>
+                <option value="Raseinių r. sav.">Raseinių r. sav.</option>
+                <option value="Rietavo sav.">Rietavo sav.</option>
+                <option value="Rokiškio r. sav.">Rokiškio r. sav.</option>
+                <option value="Skuodo r. sav.">Skuodo r. sav.</option>
+                <option value="Šakių r. sav.">Šakių r. sav.</option>
+                <option value="Šalčininkų r. sav.">Šalčininkų r. sav.</option>
+                <option value="Šiaulių r. sav.">Šiaulių r. sav.</option>
+                <option value="Šilalės r. sav.">Šilalės r. sav.</option>
+                <option value="Šilutės r. sav.">Šilutės r. sav.</option>
+                <option value="Širvintų r. sav.">Širvintų r. sav.</option>
+                <option value="Švenčionių r. sav.">Švenčionių r. sav.</option>
+                <option value="Tauragės r. sav.">Tauragės r. sav.</option>
+                <option value="Telšių r. sav.">Telšių r. sav.</option>
+                <option value="Trakų r. sav.">Trakų r. sav.</option>
+                <option value="Ukmergės r. sav.">Ukmergės r. sav.</option>
+                <option value="Utenos r. sav.">Utenos r. sav.</option>
+                <option value="Varėnos r. sav.">Varėnos r. sav.</option>
+                <option value="Vilkaviškio r. sav.">Vilkaviškio r. sav.</option>
+                <option value="Vilniaus r. sav.">Vilniaus r. sav.</option>
+                <option value="Visagino sav.">Visagino sav.</option>
+                <option value="Zarasų r. sav.">Zarasų r. sav.</option>
+              </select>
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.city.length && withOutLoginSubmitted">
+                Įveskite miestą</div>
+            </div>
+            <div class="col-md-4">
+              <label for="postcode">Pašto kodas</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.postcode" class="form-control" name="postcode"
+                id="postcode" placeholder="Pašto kodas" title="Pašto kodas" />
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.postcode.length && withOutLoginSubmitted">
+                Įveskite pašto kodą</div>
+            </div>
+            <div class="col-md-4">
+              <label for="zone_id">Regionas</label>
+              <select class="form-control" [(ngModel)]="withoutLoginForm.zoneId" name="zoneId" id="zoneId"
+                placeholder="Prašome pasirinkti" title="Prašome pasirinkti">
+                <option value="" selected disabled> --- Prašome pasirinkti --- </option>
+                <option value="Alytus">Alytus</option>
+                <option value="Kaunas">Kaunas</option>
+                <option value="Klaipeda">Klaipeda</option>
+                <option value="Marijampole">Marijampole</option>
+                <option value="Panevezys">Panevezys</option>
+                <option value="Siauliai">Siauliai</option>
+                <option value="Taurage">Taurage</option>
+                <option value="Telsiai">Telsiai</option>
+                <option value="Utena">Utena</option>
+                <option value="Vilnius">Vilnius</option>
+              </select>
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.postcode.length && withOutLoginSubmitted">
+                Įveskite regionas</div>
+            </div>
+          </div>
+        </tab>
+      </tabset>
+    </ng-container>
+
+    <div class="mt-2">
+      <h3>Kaip norite gauti prekę?</h3>
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <button class="btn btn-primary btn-block shipping-button" (click)="onChangeShipping(1)"
+            [ngClass]="{'active':selectedShippingType==1}">Nemokamas atsiėmimas pas mus</button>
+          <div class="text-center text-primary">
+            <small>Adresas: Laisvės pr. 82, LT-06125, Vilnius</small>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <button class="btn btn-primary btn-block shipping-button" (click)="onChangeShipping(2)"
+            [ngClass]="{'active':selectedShippingType==2}">Noriu kad prekė butų pristatyta</button>
+        </div>
+        <div class="col-md-4 mb-3">
+          <button class="btn btn-primary btn-block shipping-button" (click)="onChangeShipping(3)"
+            [ngClass]="{'active':selectedShippingType==3}">Prekę atsiimsiu paštomate</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <h3>Informacija apie pirkėją</h3>
+        </div>
+        <div class="col-md-8 mb-3 d-block">
+          <label class="custom-checkbox mr-3">Prekę atsiimsiu pats
+            <input type="checkbox" [(ngModel)]="isSelfPickup">
+            <span class="checkmark"></span>
+          </label>
+          <label class="custom-checkbox mr-3">Prekę priims įgaliotas asmuo
+            <input type="checkbox" [(ngModel)]="isAuthorizedPersonPickup">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+      </div>
+      <ng-container *ngIf="selectedShippingType==2">
+        <div class="row form-group">
+          <div class="col-md-4">
+            <input type="text" autocomplete="off" class="form-control" [(ngModel)]="name" name="name"
+              placeholder="Vardas pavardė" />
+            <label *ngIf="!name.length && isSubmitted && selectedShippingType==2" class="text-danger">Įveskite
+              vardą</label>
+          </div>
+          <div class="col-md-4">
+            <input type="text" autocomplete="off" class="form-control" [(ngModel)]="email" name="email"
+              placeholder="El.pašto adresas" />
+            <label *ngIf="!email.length && isSubmitted && selectedShippingType==2" class="text-danger">Įveskite el.
+              Pašto adresą</label>
+            <label *ngIf="emailValidate(email)" class="text-danger">
+              Prašome įvesti galiojantį elektroninio pašto adresą</label>
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-md-4">
+            <input type="text" autocomplete="off" class="form-control" [(ngModel)]="phone" name="phone"
+              placeholder="Telefono numeris" />
+            <label *ngIf="!phone.length && isSubmitted && selectedShippingType==2" class="text-danger">Įveskite telefono
+              numerį</label>
+          </div>
+          <div class="col-md-4">
+            <input type="text" autocomplete="off" class="form-control" [(ngModel)]="address" name="address"
+              placeholder="Adresas" />
+            <label *ngIf="!address.length && isSubmitted && selectedShippingType==2" class="text-danger">Įveskite
+              adresą</label>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="selectedShippingType==3">
+        <div class="row form-group">
+          <div class="col-md-4">
+            <select id="address" name="address" placeholder="Pasirinkite Adresas" [(ngModel)]="address"
+              class="form-control">
+              <option value="" selected disabled>Pasirinkite Adresas</option>
+              <option *ngFor="let address of addressList" value="{{address.NAME}}">{{address.NAME}}</option>
+            </select>
+            <label *ngIf="!address.length && isSubmitted && selectedShippingType==3" class="text-danger">Įveskite
+              telefono numerį</label>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="choice-goods-list">
+          <li>
+            <div class="mr-3 choice-goods-list-image-area">
+              <img class="" src="assets/images/icons/free.svg" alt="Vaizdas">
+            </div>
+            <div>NEMOKAMAI atsiimkite Vilniuje, užsakymų atsiėmimo punkte</div>
+          </li>
+          <li>
+            <div class="mr-3 choice-goods-list-image-area">
+              <img class="" src="assets/images/company/slider-bottom-1.svg" alt="Vaizdas">
+            </div>
+            <div>Pristatysime į namus rugpjūčio 4 d. (€ 14.99)</div>
+          </li>
+          <li>
+            <div class="mr-3 choice-goods-list-image-area">
+              <img class="" src="assets/images/company/slider-bottom-2.svg" alt="Vaizdas">
+            </div>
+            <div>14d pinigų grąžinimo garantija</div>
+          </li>
+        </ul>
+        <p class="text-primary">Dėmesio! Pristatymo terminai yra preliminarūs, kadangi terminai atsinaujina priklausomai
+          nuo faktinio užsakymo pateikimo laiko. Galutinis pristatymo terminas yra pateikiamas užsakymo patvirtinime.
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 payment-section">
+        <h3>Pasirinkite savo banką</h3>
+        <div>
+          <label class="custom-radio">
+            <img class="" src="assets/images/company/swedbank.jpg" alt="swedbank atvaizdas">
+            <input type="radio" checked="checked" value="1" name="selectedBank" [(ngModel)]="selectedBank">
+            <span class="checkmark"></span>
+          </label>
+          <label class="custom-radio">
+            <img class="" src="assets/images/company/seb.png" alt="seb vaizdas">
+            <input type="radio" name="selectedBank" value="2" [(ngModel)]="selectedBank">
+            <span class="checkmark"></span>
+          </label>
+          <label class="custom-radio">
+            <img class="" src="assets/images/company/luminor.png" alt="luminor vaizdas">
+            <input type="radio" name="selectedBank" value="3" [(ngModel)]="selectedBank">
+            <span class="checkmark"></span>
+          </label>
+          <label class="custom-radio">
+            <img class="" src="assets/images/company/citodele.jpg" alt="citodele vaizdas">
+            <input type="radio" name="selectedBank" value="4" [(ngModel)]="selectedBank">
+            <span class="checkmark"></span>
+          </label>
+          <label class="custom-radio">
+            <img class="" src="assets/images/company/siauliubankas.jpg" alt="siauliubankas vaizdas">
+            <input type="radio" name="selectedBank" value="5" [(ngModel)]="selectedBank">
+            <span class="checkmark"></span>
+          </label>
+          <label class="custom-radio">
+            <img class="" src="assets/images/company/paysera.png" alt="paysera vaizdas">
+            <input type="radio" name="selectedBank" value="6" [(ngModel)]="selectedBank">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-md-12 text-center">
+        <button type="button" class="btn btn-primary col-md-4" (click)="placeOrder()">Pirkti dabar</button>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+
+
+<section class="content-wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive">
+          <table class="table order-table">
+            <thead>
+              <tr>
+                <th>Vaizdas</th>
+                <th scope="col">Prekė</th>
+                <th scope="col">Garantija</th>
+                <th scope="col">Draudimas</th>
+                <th scope="col">Kaina</th>
+                <th scope="col">Kiekis</th>
+                <th>Nuolaidos kodas</th>
+                <th scope="col">Viso mokėti</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of items;let i=index">
+                <td><img class="order-list-img" src="{{item.product.image}}" alt="" /></td>
+                <td>{{item.product.name}}</td>
+                <td>
+                  <span *ngIf="!item.product.warrantyYear">-</span>
+                  <span *ngIf="item.product.warrantyYear" class="text-center">{{item.product.warrantyYear}} Metai</span>
+                </td>
+                <td>
+                  <span *ngIf="!item.product.insuranceYear">-</span>
+                  <span *ngIf="item.product.insurancePrice" class="text-center">{{item.product.insuranceYear}}
+                    Metai</span>
+                </td>
+                <td>€{{decimalNumber(item.product.price)}}</td>
+                <td>
+                  <div class="ordre-item-incres">
+                    <button class="btn btn-minus" type="button"
+                      (click)="decreaseProductQuantity(i,item.quantity,item.id)">
+                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                        id="Capa_1" x="0px" y="0px" viewBox="0 0 409.6 409.6"
+                        style="enable-background:new 0 0 409.6 409.6;" xml:space="preserve" width="20px" height="20px">
+                        <g>
+                          <g>
+                            <g>
+                              <path
+                                d="M392.533,187.733H17.067C7.641,187.733,0,195.374,0,204.8s7.641,17.067,17.067,17.067h375.467    c9.426,0,17.067-7.641,17.067-17.067S401.959,187.733,392.533,187.733z"
+                                data-original="#000000" class="active-path" data-old_color="#000000" fill="#532270" />
+                            </g>
+                          </g>
+                        </g>
+                      </svg>
+                    </button>
+                    <div class="num">{{item.quantity}}</div>
+                    <button class="btn btn-plus" type="button"
+                      (click)="increaseProductQuantity(i,item.quantity,item.id)">
+                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                        id="Capa_1" x="0px" y="0px" viewBox="0 0 409.6 409.6"
+                        style="enable-background:new 0 0 409.6 409.6;" xml:space="preserve" width="20px" height="20px">
+                        <g>
+                          <g>
+                            <g>
+                              <path
+                                d="M392.533,187.733H221.867V17.067C221.867,7.641,214.226,0,204.8,0s-17.067,7.641-17.067,17.067v170.667H17.067    C7.641,187.733,0,195.374,0,204.8s7.641,17.067,17.067,17.067h170.667v170.667c0,9.426,7.641,17.067,17.067,17.067    s17.067-7.641,17.067-17.067V221.867h170.667c9.426,0,17.067-7.641,17.067-17.067S401.959,187.733,392.533,187.733z"
+                                data-original="#000000" class="active-path" data-old_color="#000000" fill="#532270" />
+                            </g>
+                          </g>
+                        </g>
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+                <td>
+                  <ng-continer *ngIf="!item.product.couponCode">
+                  <a (click)="openCouponModal(i,item.product.id,template)" href="javascript:void(0)">Turite nuolaidos kodą?</a>
+                  </ng-continer>
+                  <ng-continer *ngIf="item.product.couponCode">
+                    {{item.product.couponCode}}
+                  </ng-continer>
+                </td> 
+                <td class="text-left">€{{decimalNumber(item.product.price * item.quantity)}}</td>
+              </tr>
+              <tr *ngIf="!items.length">
+                <td colspan="8" class="text-center">Jūsų krepšelis šiuo metu tuščias</td>
+              </tr>
+              <tr *ngIf="applyShiipingCharge && items.length">
+                <th colspan="5" class="text-center">
+                  Siuntimo mokestis
+                </th>
+                <td></td>
+                <td></td>
+                <td class="text-left">+ €{{decimalNumber(shppingCharge)}}</td>
+              </tr>
+              <tr *ngIf="items.length">
+                <th colspan="5" class="text-center">
+                  <!-- Kaina -->
+                </th>
+                <th></th>
+                <td></td>
+                <td class="text-left">€{{decimalNumber(totalPrice)}}</td>
+                <td></td>
+              </tr>
+              <tr *ngIf="isDiscountApply && items.length">
+                <th colspan="5" class="text-center">
+                  <!-- Kaina su nuolaida({{discountPercentage}}%) -->
+                </th>
+                <td></td>
+                <td></td>
+                <td class="text-left">- €{{decimalNumber(discountPrice)}}</td>
+                <td></td>
+              </tr>
+              <tr *ngIf="isDiscountApply && items.length">
+                <th colspan="5" class="text-center">
+                  <!-- Visa kaina -->
+                </th>
+                <td></td>
+                <td></td>
+                <td class="text-left">€{{decimalNumber(totalDiscountPrice)}}</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div><hr>
+    <!-- <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-4 float-right">
+          <div class="input-group mb-3">
+          <input type="text" id="couponCode" placeholder="Turite nuolaidos kodą?" class="form-control" title="Turite nuolaidos kodą?" name="couponCode" [(ngModel)]="couponCode">
+          <div class="input-group-append">
+            <span class="input-group-text" id="basic-addon2 cursor" (click)="applyCouponCode()">Taikyti</span>
+          </div>
+          </div>
+          <label *ngIf="couponCodeErrorMessage" class='text-danger'>{{couponCodeErrorMessage}}</label>
+          <label *ngIf="couponCodeSuccessMessage" class='text-success'>{{couponCodeSuccessMessage}}</label>
+        </div>
+      </div>
+    </div> -->
+    <ng-container *ngIf="!isLogin">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <form (submit)="login()" [formGroup]="loginForm">
+                <div class="form-group">
+                  <h3>Registruotiems vartotojams</h3>
+                </div>
+                <div class="form-group" *ngIf="errorMessage">
+                  <span class="validation-error pad-left-md">{{errorMessage}}</span>
+                </div>
+                <div class="form-group">
+                  <input type="email" formControlName="email" class="form-control" id="email" name="email"
+                    placeholder="Jūsų el pašto adresas" />
+                  <div class="invalid-feedback d-block"
+                    *ngIf="loginForm.get('email').hasError('required') && (loginForm.get('email').touched || submitted)">
+                    Įveskite el. Pašto adresą
+                  </div>
+                  <div class="invalid-feedback d-block"
+                    *ngIf="loginForm.get('email').hasError('email') && (loginForm.get('email').touched || submitted)">
+                    Įveskite galiojantį el. Pašto adresą
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input type="password" formControlName="password" class="form-control" id="password" name="password"
+                    placeholder="Slaptažodis" />
+                  <div class="invalid-feedback d-block"
+                    *ngIf="loginForm.get('password').hasError('required') && (loginForm.get('password').touched || submitted)">
+                    Slaptažodžio laukas yra privalomas
+                  </div>
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-primary btn-block" type="submit">Prisijungti</button>
+                </div>
+              </form>
+            </div>
+            <div class="col-md-4">
+              <form (submit)="register()" [formGroup]="registerForm">
+                  <div class="form-group">
+                    <h3>Neregistruotiems vartotojams</h3>
+                  </div>
+                  <div class="form-group">
+                    <span class="validation-error pad-left-md" *ngIf="registerErrorMessage">{{registerErrorMessage}}</span>
+                  </div>
+                  <div class="form-group">
+                    <label class="custom-radio-btn-1 col-md-4">
+                      <input type="radio" checked="checked" name="role" value="2" formControlName="role">
+                      <div class="checkmark">Santechnikams</div>
+                    </label>
+                    <label class="custom-radio-btn-1  col-md-4">
+                      <input type="radio" name="role" value="3" formControlName="role">
+                      <div class="checkmark">Privatiems/Juridiniams</div>
+                    </label>
+                    <label class="custom-radio-btn-1  col-md-4">
+                      <input type="radio" name="role" value="4" formControlName="role">
+                      <div class="checkmark">Prekybininkams</div>
+                    </label>
+                  </div>
+                  <div class="form-group text-center">
+                    <input type="radio" value="1" id="userType1" name="userType" formControlName="userType" />&nbsp;
+                    <label for="userType1">Fizinis asmuo</label>&nbsp;
+                    <input type="radio" value="2" id="userType2" name="userType"  formControlName="userType" />&nbsp;
+                    <label for="userType2">Juridinis asmuo</label> 
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control" formControlName="name" id="name" name="name"
+                      placeholder="Vardas ir pavardė" />
+                    <div class="invalid-feedback d-block"  *ngIf="registerForm.get('name').hasError('required') && (registerForm.get('name').touched || registerSubmitted)">
+                      Įveskite vardą
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <input type="password" class="form-control" formControlName="password" id="password"
+                      name="password" placeholder="Slaptažodis">
+                    <div class="invalid-feedback d-block"
+                      *ngIf="registerForm.get('password').hasError('required') && (registerForm.get('password').touched || registerSubmitted)">
+                      Slaptažodžio laukas yra privalomas
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control" formControlName="email" id="email" name="email"
+                      placeholder="Jūsų el pašto adresas" />
+                    <div class="invalid-feedback d-block"
+                      *ngIf="registerForm.get('email').hasError('required') && (registerForm.get('email').touched || registerSubmitted)">
+                      Įveskite el. Pašto adresą
+                    </div>
+                    <div class="invalid-feedback d-block"
+                      *ngIf="registerForm.get('email').hasError('email') && (registerForm.get('email').touched || registerSubmitted)">
+                      Įveskite galiojantį el. Pašto adresą
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control" formControlName="phone" id="phone" name="phone"
+                      placeholder="Telefonas">
+                    <div class="invalid-feedback d-block"
+                      *ngIf="registerForm.get('phone').hasError('required') && (registerForm.get('phone').touched || registerSubmitted)">
+                      Įveskite telefoną
+                    </div>
+                  </div> 
+                  <ng-container *ngIf="registerForm.value.userType==2">
+                  <div class="form-group">
+                    <input type="text" class="form-control" formControlName="companyName" id="companyName" name="companyName"
+                      placeholder="Įmonės pavadinimas">
+                    <div class="invalid-feedback d-block" *ngIf="registerForm.get('companyName').hasError('required') && (registerForm.get('companyName').touched || registerSubmitted)">
+                      Įveskite įmonės pavadinimą
+                    </div>
+                  </div> 
+                  <div class="form-group">
+                    <input type="text" class="form-control" formControlName="companyCode" id="companyCode" name="companyCode"
+                      placeholder="Įmonės kodas">
+                    <div class="invalid-feedback d-block" *ngIf="registerForm.get('companyCode').hasError('required') && (registerForm.get('companyCode').touched || registerSubmitted)">
+                      Įveskite įmonės kodą
+                    </div>
+                  </div> 
+                  <div class="form-group">
+                    <input type="text" class="form-control" formControlName="pvmCode" id="pvmCode" name="pvmCode" placeholder="PVM kodas">
+                    <div class="invalid-feedback d-block" *ngIf="registerForm.get('pvmCode').hasError('required') && (registerForm.get('pvmCode').touched || registerSubmitted)">
+                      Įveskite PVM kodą
+                    </div>
+                  </div> 
+                </ng-container>
+                  <div class="form-group">
+                    <button class="btn btn-primary btn-block" type="submit">Pateikti</button>
+                  </div>                 
+              </form>
+            </div>
+            <div class="col-md-4">
+              <form [formGroup]="withoutLoginForm">
+                  <div class="form-group">
+                    <h3>Pirkti be registracijos</h3>
+                  </div>                  
+                  <div class="form-group text-center">
+                    <input type="radio" name="quickShop" value="1" id="individual" formControlName="quickShop" />&nbsp;
+                    <label for="individual">Fizinis asmuo</label>&nbsp;
+                    <input type="radio" name="quickShop" value="2" id="legalPerson" formControlName="quickShop" />&nbsp;
+                    <label for="legalPerson">Juridinis asmuo</label>&nbsp;
+                    <input type="radio" name="quickShop" value="3" id="quickShop" formControlName="quickShop" />&nbsp;
+                    <label for="quickShop">Greitas apsipirkimas</label>&nbsp;                   
+                  </div>
+                  <div class="form-group" *ngIf="withoutLoginForm.value.quickShop == '1' || withoutLoginForm.value.quickShop == '2'">
+                    <input type="text" class="form-control" formControlName="name" id="name" name="name"
+                      placeholder="Vardas ir pavardė" />
+                    <div class="invalid-feedback d-block"
+                      *ngIf="withoutLoginForm.get('name').hasError('required') && (withoutLoginForm.get('name').touched || withOutLoginSubmitted)">
+                      Įveskite vardą
+                    </div>
+                  </div>
+                  <div class="form-group" *ngIf="withoutLoginForm.value.quickShop == '1' || withoutLoginForm.value.quickShop == '2'"> 
+                    <input type="text" class="form-control" formControlName="email" id="email" name="email"
+                      placeholder="Jūsų el pašto adresas" />
+                    <div class="invalid-feedback d-block"
+                      *ngIf="withoutLoginForm.get('email').hasError('required') && (withoutLoginForm.get('email').touched || withOutLoginSubmitted)">
+                      Įveskite el. Pašto adresą
+                    </div>
+                    <div class="invalid-feedback d-block"
+                      *ngIf="withoutLoginForm.get('email').hasError('email') && (withoutLoginForm.get('email').touched || withOutLoginSubmitted)">
+                      Įveskite galiojantį el. Pašto adresą
+                    </div>
+                  </div>
+                  <div class="form-group" >
+                    <input type="text" class="form-control" formControlName="phone" id="phone" name="phone" placeholder="Telefonas" />
+                    <div class="invalid-feedback d-block"
+                      *ngIf="withoutLoginForm.get('phone').hasError('required') && (withoutLoginForm.get('phone').touched || withOutLoginSubmitted)">
+                      Įveskite telefoną
+                    </div>
+                  </div> 
+                  <div class="form-group" *ngIf="withoutLoginForm.value.quickShop == '1' || withoutLoginForm.value.quickShop == '2'">
+                    <input type="text" class="form-control" formControlName="address" id="address" name="address" placeholder="Adresas" />
+                    <div class="invalid-feedback d-block"
+                      *ngIf="withoutLoginForm.get('address').hasError('required') && (withoutLoginForm.get('address').touched || withOutLoginSubmitted)">
+                      Įveskite adresą
+                    </div>
+                  </div>
+                  <ng-container *ngIf="withoutLoginForm.value.quickShop == '2'">
+                  <div class="form-group">
+                    <input type="text" class="form-control" formControlName="companyName" id="companyName" name="companyName" placeholder="Įmonės pavadinimas" />
+                    <div class="invalid-feedback d-block" *ngIf="withoutLoginForm.get('companyName').hasError('required') && (withoutLoginForm.get('companyName').touched || withOutLoginSubmitted)">
+                      Įveskite įmonės pavadinimą
+                    </div>
+                  </div> 
+                  <div class="form-group">
+                    <input type="text" class="form-control" formControlName="companyCode" id="companyCode" name="companyCode" placeholder="Įmonės kodas" />
+                    <div class="invalid-feedback d-block" *ngIf="withoutLoginForm.get('companyCode').hasError('required') && (withoutLoginForm.get('companyCode').touched || withOutLoginSubmitted)">
+                      Įveskite įmonės kodą
+                    </div>
+                  </div> 
+                  <div class="form-group">
+                    <input type="text" class="form-control" formControlName="pvmCode" id="pvmCode" name="pvmCode" placeholder="PVM kodas" />
+                    <div class="invalid-feedback d-block" *ngIf="withoutLoginForm.get('pvmCode').hasError('required') && (withoutLoginForm.get('pvmCode').touched || withOutLoginSubmitted)">
+                      Įveskite PVM kodą
+                    </div>
+                  </div>                    
+                </ng-container>
+                <div class="form-group">
+                  <textarea class="form-control" placeholder="Pakomentuokite" title="Pakomentuokite"></textarea>
+                </div>   
+              </form>
+            </div>            
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!-- <div class="row mb-4" *ngIf="!isLogin">
+      <div class="col-md-4">
+        <button (click)="withOutLoign=!withOutLoign" [ngClass]="{'active':withOutLoign}"
+          class="btn btn-primary without-user-login-button btn-block ">Pirkti be registracijos</button>
+      </div>
+    </div> -->
+    <!-- <ng-container *ngIf="withOutLoign">
+      <tabset #staticTabs>
+        <tab heading="Fizinis asmuo" (selectTab)="changeTab(1)">
+          <div class="row form-group mt-2">
+            <div class="col-md-4">
+              <label for="name">Vardas</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.name" class="form-control" name="name" id="name"
+                placeholder="Vardas" title="Vardas" />
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.name.length && withOutLoginSubmitted">
+                Įveskite vardą</div>
+            </div>
+            <div class="col-md-4">
+              <label for="surname">Pavardė</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.surname" class="form-control" name="surname" id="surname"
+                placeholder="Pavardė" title="Pavardė" />
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.surname.length  && withOutLoginSubmitted">
+                Įveskite pavardę</div>
+            </div>
+            <div class="col-md-4">
+              <label for="email">El. Paštas</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.email" class="form-control" name="email" id="email"
+                placeholder="El. Paštas" title="El. Paštas" />
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.email.length && withOutLoginSubmitted">
+                Įveskite el. Pašto adresą</div>
+              <div class="invalid-feedback d-block" *ngIf="emailValidate(withoutLoginForm.email)">Prašome įvesti
+                galiojantį elektroninio pašto adresą</div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-4">
+              <label for="phone_number">Telefonas</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.phoneNumber" class="form-control" name="phoneNumber"
+                id="phoneNumber" placeholder="Telefonas" title="Telefonas" />
+              <div class="invalid-feedback d-block"
+                *ngIf="!withoutLoginForm.phoneNumber.length && withOutLoginSubmitted">Įveskite telefono numerį</div>
+            </div>
+            <div class="col-md-4">
+              <label for="address">Gatvės pavadinimas</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.address" class="form-control" name="address" id="address"
+                placeholder="Gatvės pavadinimas" title="Gatvės pavadinimas" />
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.address.length && withOutLoginSubmitted">
+                Įveskite adresą</div>
+            </div>
+            <div class="col-md-4">
+              <label for="houseNumber">Namo Nr</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.houseNumber" class="form-control" name="houseNumber"
+                id="houseNumber" placeholder="Namo Nr" title="Namo Nr" />
+              <div class="invalid-feedback d-block"
+                *ngIf="!withoutLoginForm.houseNumber.length && withOutLoginSubmitted">Įveskite namo numerį</div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-4">
+              <label for="city">Miestas</label>
+              <select [(ngModel)]="withoutLoginForm.city" class="form-control" name="city" id="city"
+                placeholder="Miestas" title="Miestas">
+                <option value="" selected disabled>Miestas</option>
+                <option value="Vilniaus m. sav.">Vilniaus m. sav.</option>
+                <option value="Kauno m. sav.">Kauno m. sav.</option>
+                <option value="Klaipėdos m. sav.">Klaipėdos m. sav.</option>
+                <option value="Panevėžio m. sav.">Panevėžio m. sav.</option>
+                <option value="Šiaulių m. sav.">Šiaulių m. sav.</option>
+                <option value="Akmenės r. sav.">Akmenės r. sav.</option>
+                <option value="Alytaus m. sav.">Alytaus m. sav.</option>
+                <option value="Alytaus r. sav.">Alytaus r. sav.</option>
+                <option value="Anykščių r. sav.">Anykščių r. sav.</option>
+                <option value="Birštono sav.">Birštono sav.</option>
+                <option value="Biržų r. sav.">Biržų r. sav.</option>
+                <option value="Druskininkų sav.">Druskininkų sav.</option>
+                <option value="Elektrėnų sav.">Elektrėnų sav.</option>
+                <option value="Ignalinos r. sav.">Ignalinos r. sav.</option>
+                <option value="Jonavos r. sav.">Jonavos r. sav.</option>
+                <option value="Joniškio r. sav.">Joniškio r. sav.</option>
+                <option value="Jurbarko r. sav.">Jurbarko r. sav.</option>
+                <option value="Kaišiadorių r. sav.">Kaišiadorių r. sav.</option>
+                <option value="Kalvarijos sav.">Kalvarijos sav.</option>
+                <option value="Kauno r. sav.">Kauno r. sav.</option>
+                <option value="Kazlų Rūdos sav.">Kazlų Rūdos sav.</option>
+                <option value="Kėdainių r. sav.">Kėdainių r. sav.</option>
+                <option value="Kelmės r. sav.">Kelmės r. sav.</option>
+                <option value="Klaipėdos r. sav.">Klaipėdos r. sav.</option>
+                <option value="Kretingos r. sav.">Kretingos r. sav.</option>
+                <option value="Kupiškio r. sav.">Kupiškio r. sav.</option>
+                <option value="Lazdijų r. sav.">Lazdijų r. sav.</option>
+                <option value="Marijampolės sav.">Marijampolės sav.</option>
+                <option value="Mažeikių r. sav.">Mažeikių r. sav.</option>
+                <option value="Molėtų r. sav.">Molėtų r. sav.</option>
+                <option value="Neringos sav.">Neringos sav.</option>
+                <option value="Pagėgių sav.">Pagėgių sav.</option>
+                <option value="Pakruojo r. sav.">Pakruojo r. sav.</option>
+                <option value="Palangos m. sav.">Palangos m. sav.</option>
+                <option value="Panevėžio r. sav.">Panevėžio r. sav.</option>
+                <option value="Pasvalio r. sav.">Pasvalio r. sav.</option>
+                <option value="Plungės r. sav.">Plungės r. sav.</option>
+                <option value="Prienų r. sav.">Prienų r. sav.</option>
+                <option value="Radviliškio r. sav.">Radviliškio r. sav.</option>
+                <option value="Raseinių r. sav.">Raseinių r. sav.</option>
+                <option value="Rietavo sav.">Rietavo sav.</option>
+                <option value="Rokiškio r. sav.">Rokiškio r. sav.</option>
+                <option value="Skuodo r. sav.">Skuodo r. sav.</option>
+                <option value="Šakių r. sav.">Šakių r. sav.</option>
+                <option value="Šalčininkų r. sav.">Šalčininkų r. sav.</option>
+                <option value="Šiaulių r. sav.">Šiaulių r. sav.</option>
+                <option value="Šilalės r. sav.">Šilalės r. sav.</option>
+                <option value="Šilutės r. sav.">Šilutės r. sav.</option>
+                <option value="Širvintų r. sav.">Širvintų r. sav.</option>
+                <option value="Švenčionių r. sav.">Švenčionių r. sav.</option>
+                <option value="Tauragės r. sav.">Tauragės r. sav.</option>
+                <option value="Telšių r. sav.">Telšių r. sav.</option>
+                <option value="Trakų r. sav.">Trakų r. sav.</option>
+                <option value="Ukmergės r. sav.">Ukmergės r. sav.</option>
+                <option value="Utenos r. sav.">Utenos r. sav.</option>
+                <option value="Varėnos r. sav.">Varėnos r. sav.</option>
+                <option value="Vilkaviškio r. sav.">Vilkaviškio r. sav.</option>
+                <option value="Vilniaus r. sav.">Vilniaus r. sav.</option>
+                <option value="Visagino sav.">Visagino sav.</option>
+                <option value="Zarasų r. sav.">Zarasų r. sav.</option>
+              </select>
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.city.length && withOutLoginSubmitted">
+                Įveskite miestą</div>
+            </div>
+            <div class="col-md-4">
+              <label for="postcode">Pašto kodas</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.postcode" class="form-control" name="postcode"
+                id="postcode" placeholder="Pašto kodas" title="Pašto kodas" />
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.postcode.length && withOutLoginSubmitted">
+                Įveskite pašto kodą</div>
+            </div>
+            <div class="col-md-4">
+              <label for="zone_id">Regionas</label>
+              <select class="form-control" [(ngModel)]="withoutLoginForm.zoneId" name="zoneId" id="zoneId"
+                placeholder="Prašome pasirinkti" title="Prašome pasirinkti">
+                <option value="" selected disabled> --- Prašome pasirinkti --- </option>
+                <option value="Alytus">Alytus</option>
+                <option value="Kaunas">Kaunas</option>
+                <option value="Klaipeda">Klaipeda</option>
+                <option value="Marijampole">Marijampole</option>
+                <option value="Panevezys">Panevezys</option>
+                <option value="Siauliai">Siauliai</option>
+                <option value="Taurage">Taurage</option>
+                <option value="Telsiai">Telsiai</option>
+                <option value="Utena">Utena</option>
+                <option value="Vilnius">Vilnius</option>
+              </select>
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.postcode.length && withOutLoginSubmitted">
+                Įveskite regionas</div>
+            </div>
+          </div>
+        </tab>
+        <tab heading="Juridinis asmuo" (selectTab)="changeTab(2)">
+          <div class="row form-group mt-2">
+            <div class="col-md-4">
+              <label for="firm">Įmonė</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.firm" class="form-control" name="firm" id="firm"
+                placeholder="Įmonė" title="Įmonė" />
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.firm.length && withOutLoginSubmitted">
+                Įveskite Įmonė</div>
+            </div>
+            <div class="col-md-4">
+              <label for="companyCode">Įmonės kodas</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.companyCode" class="form-control" name="companyCode"
+                id="companyCode" placeholder="Įmonės kodas" title="Įmonės kodas" />
+              <div class="invalid-feedback d-block"
+                *ngIf="!withoutLoginForm.companyCode.length && withOutLoginSubmitted">Įveskite įmonės kodą</div>
+            </div>
+            <div class="col-md-4">
+              <label for="vatCode">PVM Kodas</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.vatCode" class="form-control" name="vatCode"
+                id="vatCode  " placeholder="PVM Kodas" title="PVM Kodas" />
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.vatCode.length && withOutLoginSubmitted">
+                Įveskite PVM kodą</div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-4">
+              <label for="name">Vardas</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.name" class="form-control" name="name" id="name"
+                placeholder="Vardas" title="Vardas" />
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.name.length && withOutLoginSubmitted">
+                Įveskite vardą</div>
+            </div>
+            <div class="col-md-4">
+              <label for="surname">Pavardė</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.surname" class="form-control" name="surname" id="surname"
+                placeholder="Pavardė" title="Pavardė" />
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.surname.length && withOutLoginSubmitted">
+                Įveskite pavardę</div>
+            </div>
+            <div class="col-md-4">
+              <label for="email">El. Paštas</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.email" class="form-control" name="email" id="email"
+                placeholder="El. Paštas" title="El. Paštas" />
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.email.length && withOutLoginSubmitted">
+                Įveskite el. Pašto adresą</div>
+              <div class="invalid-feedback d-block" *ngIf="emailValidate(withoutLoginForm.email)">Prašome įvesti
+                galiojantį elektroninio pašto adresą</div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-4">
+              <label for="phone_number">Telefonas</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.phoneNumber" class="form-control" name="phoneNumber"
+                id="phoneNumber" placeholder="Telefonas" title="Telefonas" />
+              <div class="invalid-feedback d-block"
+                *ngIf="!withoutLoginForm.phoneNumber.length && withOutLoginSubmitted">Įveskite telefono numerį</div>
+            </div>
+            <div class="col-md-4">
+              <label for="address">Gatvės pavadinimas</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.address" class="form-control" name="address" id="address"
+                placeholder="Gatvės pavadinimas" title="Gatvės pavadinimas" />
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.address.length && withOutLoginSubmitted">
+                Įveskite adresą</div>
+            </div>
+            <div class="col-md-4">
+              <label for="houseNumber">Namo Nr</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.houseNumber" class="form-control" name="houseNumber"
+                id="houseNumber" placeholder="Namo Nr" title="Namo Nr" />
+              <div class="invalid-feedback d-block"
+                *ngIf="!withoutLoginForm.houseNumber.length && withOutLoginSubmitted">Įveskite namo numerį</div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-4">
+              <label for="city">Miestas</label>
+              <select [(ngModel)]="withoutLoginForm.city" class="form-control" name="city" id="city"
+                placeholder="Miestas" title="Miestas">
+                <option value="" selected disabled>Miestas</option>
+                <option value="Vilniaus m. sav.">Vilniaus m. sav.</option>
+                <option value="Kauno m. sav.">Kauno m. sav.</option>
+                <option value="Klaipėdos m. sav.">Klaipėdos m. sav.</option>
+                <option value="Panevėžio m. sav.">Panevėžio m. sav.</option>
+                <option value="Šiaulių m. sav.">Šiaulių m. sav.</option>
+                <option value="Akmenės r. sav.">Akmenės r. sav.</option>
+                <option value="Alytaus m. sav.">Alytaus m. sav.</option>
+                <option value="Alytaus r. sav.">Alytaus r. sav.</option>
+                <option value="Anykščių r. sav.">Anykščių r. sav.</option>
+                <option value="Birštono sav.">Birštono sav.</option>
+                <option value="Biržų r. sav.">Biržų r. sav.</option>
+                <option value="Druskininkų sav.">Druskininkų sav.</option>
+                <option value="Elektrėnų sav.">Elektrėnų sav.</option>
+                <option value="Ignalinos r. sav.">Ignalinos r. sav.</option>
+                <option value="Jonavos r. sav.">Jonavos r. sav.</option>
+                <option value="Joniškio r. sav.">Joniškio r. sav.</option>
+                <option value="Jurbarko r. sav.">Jurbarko r. sav.</option>
+                <option value="Kaišiadorių r. sav.">Kaišiadorių r. sav.</option>
+                <option value="Kalvarijos sav.">Kalvarijos sav.</option>
+                <option value="Kauno r. sav.">Kauno r. sav.</option>
+                <option value="Kazlų Rūdos sav.">Kazlų Rūdos sav.</option>
+                <option value="Kėdainių r. sav.">Kėdainių r. sav.</option>
+                <option value="Kelmės r. sav.">Kelmės r. sav.</option>
+                <option value="Klaipėdos r. sav.">Klaipėdos r. sav.</option>
+                <option value="Kretingos r. sav.">Kretingos r. sav.</option>
+                <option value="Kupiškio r. sav.">Kupiškio r. sav.</option>
+                <option value="Lazdijų r. sav.">Lazdijų r. sav.</option>
+                <option value="Marijampolės sav.">Marijampolės sav.</option>
+                <option value="Mažeikių r. sav.">Mažeikių r. sav.</option>
+                <option value="Molėtų r. sav.">Molėtų r. sav.</option>
+                <option value="Neringos sav.">Neringos sav.</option>
+                <option value="Pagėgių sav.">Pagėgių sav.</option>
+                <option value="Pakruojo r. sav.">Pakruojo r. sav.</option>
+                <option value="Palangos m. sav.">Palangos m. sav.</option>
+                <option value="Panevėžio r. sav.">Panevėžio r. sav.</option>
+                <option value="Pasvalio r. sav.">Pasvalio r. sav.</option>
+                <option value="Plungės r. sav.">Plungės r. sav.</option>
+                <option value="Prienų r. sav.">Prienų r. sav.</option>
+                <option value="Radviliškio r. sav.">Radviliškio r. sav.</option>
+                <option value="Raseinių r. sav.">Raseinių r. sav.</option>
+                <option value="Rietavo sav.">Rietavo sav.</option>
+                <option value="Rokiškio r. sav.">Rokiškio r. sav.</option>
+                <option value="Skuodo r. sav.">Skuodo r. sav.</option>
+                <option value="Šakių r. sav.">Šakių r. sav.</option>
+                <option value="Šalčininkų r. sav.">Šalčininkų r. sav.</option>
+                <option value="Šiaulių r. sav.">Šiaulių r. sav.</option>
+                <option value="Šilalės r. sav.">Šilalės r. sav.</option>
+                <option value="Šilutės r. sav.">Šilutės r. sav.</option>
+                <option value="Širvintų r. sav.">Širvintų r. sav.</option>
+                <option value="Švenčionių r. sav.">Švenčionių r. sav.</option>
+                <option value="Tauragės r. sav.">Tauragės r. sav.</option>
+                <option value="Telšių r. sav.">Telšių r. sav.</option>
+                <option value="Trakų r. sav.">Trakų r. sav.</option>
+                <option value="Ukmergės r. sav.">Ukmergės r. sav.</option>
+                <option value="Utenos r. sav.">Utenos r. sav.</option>
+                <option value="Varėnos r. sav.">Varėnos r. sav.</option>
+                <option value="Vilkaviškio r. sav.">Vilkaviškio r. sav.</option>
+                <option value="Vilniaus r. sav.">Vilniaus r. sav.</option>
+                <option value="Visagino sav.">Visagino sav.</option>
+                <option value="Zarasų r. sav.">Zarasų r. sav.</option>
+              </select>
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.city.length && withOutLoginSubmitted">
+                Įveskite miestą</div>
+            </div>
+            <div class="col-md-4">
+              <label for="postcode">Pašto kodas</label>
+              <input type="text" [(ngModel)]="withoutLoginForm.postcode" class="form-control" name="postcode"
+                id="postcode" placeholder="Pašto kodas" title="Pašto kodas" />
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.postcode.length && withOutLoginSubmitted">
+                Įveskite pašto kodą</div>
+            </div>
+            <div class="col-md-4">
+              <label for="zone_id">Regionas</label>
+              <select class="form-control" [(ngModel)]="withoutLoginForm.zoneId" name="zoneId" id="zoneId"
+                placeholder="Prašome pasirinkti" title="Prašome pasirinkti">
+                <option value="" selected disabled> --- Prašome pasirinkti --- </option>
+                <option value="Alytus">Alytus</option>
+                <option value="Kaunas">Kaunas</option>
+                <option value="Klaipeda">Klaipeda</option>
+                <option value="Marijampole">Marijampole</option>
+                <option value="Panevezys">Panevezys</option>
+                <option value="Siauliai">Siauliai</option>
+                <option value="Taurage">Taurage</option>
+                <option value="Telsiai">Telsiai</option>
+                <option value="Utena">Utena</option>
+                <option value="Vilnius">Vilnius</option>
+              </select>
+              <div class="invalid-feedback d-block" *ngIf="!withoutLoginForm.postcode.length && withOutLoginSubmitted">
+                Įveskite regionas</div>
+            </div>
+          </div>
+        </tab>
+      </tabset>
+    </ng-container> -->
+
+    <div class="mt-2">
+      <h3>Kaip norite gauti prekę?</h3>
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <button class="btn btn-primary btn-block shipping-button" (click)="onChangeShipping(1)"
+            [ngClass]="{'active':selectedShippingType==1}">Nemokamas atsiėmimas pas mus</button>
+          <div class="text-center text-primary">
+            <small>Adresas: Laisvės pr. 82, LT-06125, Vilnius</small>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <button class="btn btn-primary btn-block shipping-button" (click)="onChangeShipping(2)"
+            [ngClass]="{'active':selectedShippingType==2}">Noriu kad prekė butų pristatyta</button>
+        </div>
+        <div class="col-md-4 mb-3">
+          <select [ngClass]="{'active':selectedShippingType==3}" (change)="onChangeShipping(3)" id="address" name="address" placeholder="Prekę atsiimsiu paštomate" [(ngModel)]="address" class="form-control shipping-button address-list">
+            <option value="" selected disabled>Prekę atsiimsiu paštomate</option>
+            <option *ngFor="let address of addressList" value="{{address.NAME}}">{{address.NAME}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <h3>Informacija apie pirkėją</h3>
+        </div>
+        <div class="col-md-8 mb-3 d-block">
+          <input type="radio" checked value="1" id="isSelfPickup" name="isSelfPickup" [(ngModel)]="isSelfPickup"  />&nbsp;
+          <label for="isSelfPickup">Prekę atsiimsiu pats</label>&nbsp;
+          <input type="radio" value="0" id="isAuthorizedPersonPickup" name="isSelfPickup"  [(ngModel)]="isSelfPickup"  />&nbsp;
+          <label for="isAuthorizedPersonPickup">Prekę priims įgaliotas asmuo</label>         
+        </div>
+      </div>
+      <ng-container *ngIf="selectedShippingType==2 || isAuthorizedPersonPickup">
+        <div class="row form-group">
+          <div class="col-md-4">
+            <input type="text" autocomplete="off" class="form-control" [(ngModel)]="name" name="name"
+              placeholder="Vardas pavardė" />
+            <label *ngIf="!name.length && isSubmitted && (selectedShippingType==2 || isAuthorizedPersonPickup)" class="text-danger">Įveskite
+              vardą</label>
+          </div>
+          <div class="col-md-4">
+            <input type="text" autocomplete="off" class="form-control" [(ngModel)]="email" name="email"
+              placeholder="El.pašto adresas" />
+            <label *ngIf="!email.length && isSubmitted && (selectedShippingType==2 || isAuthorizedPersonPickup)" class="text-danger">Įveskite el.
+              Pašto adresą</label>
+            <label *ngIf="emailValidate(email)" class="text-danger">
+              Prašome įvesti galiojantį elektroninio pašto adresą</label>
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-md-4">
+            <input type="text" autocomplete="off" class="form-control" [(ngModel)]="phone" name="phone"
+              placeholder="Telefono numeris" />
+            <label *ngIf="!phone.length && isSubmitted && (selectedShippingType==2 || isAuthorizedPersonPickup)" class="text-danger">Įveskite telefono
+              numerį</label>
+          </div>
+          <div class="col-md-4">
+            <input type="text" autocomplete="off" class="form-control" [(ngModel)]="address" name="address"
+              placeholder="Adresas" />
+            <label *ngIf="!address.length && isSubmitted && (selectedShippingType==2 || isAuthorizedPersonPickup)" class="text-danger">Įveskite
+              adresą</label>
+          </div>
+        </div>
+      </ng-container>      
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="choice-goods-list">
+          <li>
+            <div class="mr-3 choice-goods-list-image-area">
+              <img class="" src="assets/images/icons/free.svg" alt="Vaizdas" />
+            </div>
+            <div>NEMOKAMAI atsiimkite Vilniuje, užsakymų atsiėmimo punkte</div>
+          </li>
+          <li>
+            <div class="mr-3 choice-goods-list-image-area">
+              <img class="" src="assets/images/company/slider-bottom-1.svg" alt="Vaizdas" />
+            </div>
+            <div>Pristatysime į namus rugpjūčio 4 d. (€ 14.99)</div>
+          </li>
+          <li>
+            <div class="mr-3 choice-goods-list-image-area">
+              <img class="" src="assets/images/company/slider-bottom-2.svg" alt="Vaizdas" />
+            </div>
+            <div>14d pinigų grąžinimo garantija</div>
+          </li>
+        </ul>
+        <p class="text-primary">
+          Dėmesio! Pristatymo terminai yra preliminarūs, kadangi terminai atsinaujina priklausomai
+          nuo faktinio užsakymo pateikimo laiko. Galutinis pristatymo terminas yra pateikiamas užsakymo patvirtinime.
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 payment-section">
+        <!-- <h3>Pasirinkite savo banką</h3> -->
+        <h3>Pasirinkite mokėjimo būdą</h3>
+        <div>
+          <label class="custom-radio">
+            <img class="" src="assets/images/company/swedbank.webp" alt="swedbank atvaizdas" />
+            <input type="radio" checked="checked" value="1" name="selectedBank" [(ngModel)]="selectedBank" title="Swedbank atvaizdas" />
+            <span class="checkmark"></span>
+          </label>
+          <label class="custom-radio">
+            <img class="" src="assets/images/company/seb.webp" alt="seb vaizdas" />
+            <input type="radio" name="selectedBank" value="2" [(ngModel)]="selectedBank" title="Seb vaizdas" />
+            <span class="checkmark"></span>
+          </label>
+          <label class="custom-radio">
+            <img class="" src="assets/images/company/luminor.webp" alt="luminor vaizdas" />
+            <input type="radio" name="selectedBank" value="3" [(ngModel)]="selectedBank" alt="Luminor vaizdas" />
+            <span class="checkmark"></span>
+          </label>
+          <label class="custom-radio">
+            <img class="" src="assets/images/company/citodele.webp" alt="citodele vaizdas" />
+            <input type="radio" name="selectedBank" value="4" [(ngModel)]="selectedBank"  alt="Citodele vaizdas" />
+            <span class="checkmark"></span>
+          </label>
+          <label class="custom-radio">
+            <img class="" src="assets/images/company/siauliubankas.webp" alt="siauliubankas vaizdas" />
+            <input type="radio" name="selectedBank" value="5" [(ngModel)]="selectedBank"  alt="Siauliubankas vaizdas" />
+            <span class="checkmark"></span>
+          </label>
+          <label class="custom-radio">
+            <img class="" src="assets/images/company/paysera.webp" alt="paysera vaizdas" />
+            <input type="radio" name="selectedBank" value="6" [(ngModel)]="selectedBank" alt="Paysera vaizdas" />
+            <span class="checkmark"></span>
+          </label>
+          <label class="custom-radio quick-shopping">
+            <h5>Apmokėjimas vietoje</h5>
+            <input type="radio" name="selectedBank" value="7" [(ngModel)]="selectedBank" alt="Apmokėjimas vietoje" />
+            <span class="checkmark"></span>
+          </label>
+          <label class="custom-radio advanced-account">
+            <h5>Išankstinė sąskaita</h5>
+            <input type="radio" name="selectedBank" value="8" [(ngModel)]="selectedBank" alt="Išankstinė sąskaita" />
+            <span class="checkmark"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-md-12 text-center">
+        <button type="button" class="btn btn-primary col-md-4" (click)="placeOrder()">Pirkti dabar</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Start Coupon Modal  -->
+<ng-template #template>
+  <div class="modal-header">
+      <h4 class="modal-title pull-left">Nuolaidos kodas</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <div class="" *ngIf="successMessage">
+        <p class="text-center text-success">{{successMessage}}</p>
+      </div>
+      <div class="" *ngIf="errorMessage">
+        <p class="text-center" class="text-danger">{{errorMessage}}</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="productCouponCode">Nuolaidos kodas</label>
+      <input type="text" class="form-control" [(ngModel)]="productCouponCode" name="productCouponCode" id="productCouponCode" />
+      <label class="text-danger" *ngIf="productCouponError">{{productCouponError}}</label>
+    </div>
+    <div class="mb-4 text-center">
+      <button class="btn btn-primary" (click)="productApplyCouponCode()" type="button">Pritaikyti</button>
+    </div>      
+  </div>
+</ng-template>
+<!-- End Coupon Modal  -->

@@ -1,0 +1,16 @@
+.img-zoom-container {
+	position: relative;
+}
+#myimage {
+	width:470px !important;
+	height:400px !important;
+	//width: 100% !important;
+}
+
+.img-zoom-lens {
+	position: absolute;
+	border: 1px solid #d4d4d4;
+}
+.hide{
+	display: none;
+}

@@ -1,0 +1,296 @@
+<section class="">
+	<div class="container">
+		<div class="products-list-area row">
+      		<!-- Start Product Filter Section -->
+      		<div class="products-list-left col-xl-3 col-lg-4">
+				<h4>Filtras</h4>
+				<div class="range-slider">
+					<ng5-slider [(value)]="minValue" (userChangeEnd)="onUserChangeEnd($event)" [(highValue)]="maxValue" [options]="options"></ng5-slider>
+				</div>				
+				<div *ngIf="longSizeList?.length">
+					<h4 class="text-primary">ILGIS</h4>
+					<div *ngFor="let longsize of longSizeList">
+						<label class="custom-checkbox mr-3">{{longsize}}
+							<input type="checkbox" value="{{longsize}}" [checked]="checkItemExist(longsize,selectedLongSizeList)" 
+							(change)="onCheckBoxChange(longsize,selectedLongSizeList,$event.target.checked)"  />
+							<span class="checkmark"></span>
+						</label>
+					</div>
+				</div>
+				<div *ngIf="materialList?.length">
+					<h4 class="text-primary">MEDŽIAGA</h4>
+					<div *ngFor="let material of materialList">
+						<label class="custom-checkbox mr-3">{{material}}
+							<input type="checkbox" value="{{material}}" [checked]="checkItemExist(material,selectedMaterialList)" 
+							(change)="onCheckBoxChange(material,selectedMaterialList,$event.target.checked)"  />
+							<span class="checkmark"></span>
+						</label>
+					</div>
+				</div>
+				<div *ngIf="widthList?.length">
+					<h4 class="text-primary">PLOTIS</h4>
+					<div *ngFor="let width of widthList">
+						<label class="custom-checkbox mr-3">{{width}}
+							<input type="checkbox" value="{{width}}" [checked]="checkItemExist(width,selectedWidthList)" 
+							(change)="onCheckBoxChange(width,selectedWidthList,$event.target.checked)"  />
+							<span class="checkmark"></span>
+						</label>
+					</div>
+				</div>
+				<div *ngIf="seriesList?.length">
+					<h4 class="text-primary">SERIJA</h4>
+					<div *ngFor="let series of seriesList">
+						<label class="custom-checkbox mr-3">{{series}}
+							<input type="checkbox" value="{{series}}" [checked]="checkItemExist(series,selectedSeriesList)" 
+							(change)="onCheckBoxChange(series,selectedSeriesList,$event.target.checked)"  />
+							<span class="checkmark"></span>
+						</label>
+					</div>
+				</div>
+				<div *ngIf="colorList?.length">
+					<h4 class="text-primary">SPALVA</h4>
+					<div *ngFor="let color of colorList">
+						<label class="custom-checkbox mr-3">{{color}}
+							<input type="checkbox" value="{{color}}" [checked]="checkItemExist(color,selectedColorList)" 
+							(change)="onCheckBoxChange(color,selectedColorList,$event.target.checked)"  />
+							<span class="checkmark"></span>
+						</label>
+					</div>
+				</div>
+				<div *ngIf="colorList?.length">
+					<h4 class="text-primary">TALPA</h4>
+					<div *ngFor="let capacity of capacityList">
+						<label class="custom-checkbox mr-3">{{capacity}}
+							<input type="checkbox" value="{{capacity}}" [checked]="checkItemExist(capacity,selectedCapacityList)" 
+							(change)="onCheckBoxChange(capacity,selectedCapacityList,$event.target.checked)"  />
+							<span class="checkmark"></span>
+						</label>
+					</div>
+				</div>
+				<div *ngIf="colorList?.length">
+					<h4 class="text-primary">TŪRIS</h4>
+					<div *ngFor="let volume of volumeList">
+						<label class="custom-checkbox mr-3">{{volume}}
+							<input type="checkbox" value="{{volume}}" [checked]="checkItemExist(volume,selectedVolumeList)" 
+							(change)="onCheckBoxChange(volume,selectedVolumeList,$event.target.checked)"  />
+							<span class="checkmark"></span>
+						</label>
+					</div>
+				</div>
+				<div *ngIf="typeList?.length">
+					<h4 class="text-primary">TIPAS</h4>
+					<div *ngFor="let type of typeList">
+						<label class="custom-checkbox mr-3">{{type}}
+							<input type="checkbox" value="{{type}}" [checked]="checkItemExist(type,selectedTypeList)" 
+							(change)="onCheckBoxChange(type,selectedTypeList,$event.target.checked)"  />
+							<span class="checkmark"></span>
+						</label>
+					</div>
+				</div>
+				<div class="mb-3" *ngIf="manufactureList?.length">
+					<h4 class="text-primary">Pagal gamintoją</h4>
+					<div *ngFor="let manufacture of manufactureList">
+						<label class="custom-checkbox mr-3">{{manufacture}}
+							<input type="checkbox" value="{{manufacture}}" [checked]="checkItemExist(manufacture,selectedManufacture)" 
+							(change)="onCheckBoxChange(manufacture,selectedManufacture,$event.target.checked)"  />
+							<span class="checkmark"></span>
+						</label>
+					</div>
+				</div>
+				<div *ngIf="deliveryTypeList?.length">
+					<h4 class="text-primary">Pagal pristatymą</h4>
+					<div *ngFor="let delivery of deliveryTypeList">
+						<label class="custom-checkbox mr-3">{{delivery}}
+							<input type="checkbox" value="{{delivery}}" [checked]="checkItemExist(delivery,selectedDeliveryType)" 
+							(change)="onCheckBoxChange(delivery,selectedDeliveryType,$event.target.checked)"  />
+							<span class="checkmark"></span>
+						</label>
+					</div>
+				</div>
+      		</div>
+      		<!-- End Product Filter Section -->
+			<div class="products-list-right col-xl-9 col-lg-8">
+				<div>
+					<div class="form-group">
+						<select class="form-control select-product-cat"
+							(change)="changeOrder($event.target.value)"
+							id="exampleFormControlSelect1">
+							<option value="2">Rūšiuoti pagal: Pavadinimas (A - Z)</option>
+							<option value="3">Rūšiuoti pagal: Pavadinimas (Z - A)</option>
+							<option value="4">Rūšiuoti pagal: Kaina (Žema > Aukšta)</option>
+							<option value="5">Rūšiuoti pagal: Kaina (Aukšta > Žema)</option>
+							<option value="6">Rūšiuoti pagal: Įvertinimai (Aukščiausi)</option>
+							<option value="7">Rūšiuoti pagal: Įvertinimai (Žemiausi)
+							</option>
+						</select>
+					</div>
+				</div>
+				<div class="row">
+					<!-- Start Product item -->
+					<ng-container *ngIf="productList.length">
+						<div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 mb-3" *ngFor="let product of productList;let i=index">
+							<div class="product-box wishlist-section-bootom">
+								<div>	
+													
+									<div class="wishlist-section" >
+										<svg xmlns="http://www.w3.org/2000/svg" *ngIf="!product.isWishlistAdded" (click)="addToWishlist(product.isWishlistAdded,product.id,i)" width="28" height="29" viewBox="0 0 40.052 35.634">
+											<path id="heart" d="M20.026,35.634a2.349,2.349,0,0,1-1.548-.582c-1.618-1.415-3.178-2.744-4.554-3.917l-.007-.006A84.7,84.7,0,0,1,3.973,21.8C1.262,18.525,0,15.424,0,12.037a12.518,12.518,0,0,1,3.177-8.55A10.77,10.77,0,0,1,11.189,0a10.074,10.074,0,0,1,6.293,2.172,12.875,12.875,0,0,1,2.544,2.657,12.876,12.876,0,0,1,2.545-2.657A10.074,10.074,0,0,1,28.864,0a10.771,10.771,0,0,1,8.012,3.487,12.518,12.518,0,0,1,3.177,8.55c0,3.387-1.262,6.488-3.972,9.758a84.69,84.69,0,0,1-9.943,9.333c-1.379,1.175-2.941,2.506-4.563,3.924a2.35,2.35,0,0,1-1.548.581ZM11.189,2.346A8.45,8.45,0,0,0,4.9,5.078a10.183,10.183,0,0,0-2.556,6.959c0,2.849,1.059,5.4,3.433,8.261a83.35,83.35,0,0,0,9.659,9.045l.007.006c1.382,1.177,2.948,2.512,4.578,3.937,1.64-1.428,3.208-2.765,4.592-3.944A83.371,83.371,0,0,0,34.274,20.3c2.374-2.864,3.433-5.412,3.433-8.261A10.183,10.183,0,0,0,35.15,5.078a8.449,8.449,0,0,0-6.287-2.731,7.781,7.781,0,0,0-4.858,1.682A11.385,11.385,0,0,0,21.3,7.161a1.481,1.481,0,0,1-2.544,0,11.374,11.374,0,0,0-2.707-3.133,7.781,7.781,0,0,0-4.858-1.682Zm0,0" transform="translate(0 0)" fill="#754e8c"/>
+										  </svg>
+										<i class="fa fa-heart fa-2x text-right wishlist-icon active" *ngIf="product.isWishlistAdded" (click)="addToWishlist(product.isWishlistAdded,product.id,i)" ></i>
+									</div>
+									<div class="secure-image-section">
+										<div *ngFor="let icon of product.icon_list;let i=index">
+											<img [src]="icon.icon" alt="{{icon.icon_text}}" title="{{icon.icon_text}}" />
+										</div>
+									</div>
+								</div>
+								<div class="product-image-slider">
+									<owl-carousel-o [options]="customOptions">
+										<ng-template carouselSlide
+											*ngFor="let image of product.image">
+											<div class="text-center">
+												<img [src]="image" (click)="redirectToProductDetails(product,1)" />
+											</div>
+										</ng-template>
+									</owl-carousel-o>
+								</div>
+								<div class="color-area">
+									<div class="color-area-inner" style="border-bottom: 1px solid {{product.product_label_color}}">
+										<label class="text-white m-0" style="background-color:{{product.product_label_color}}">{{product.product_label}}</label>
+									</div>
+								</div><br/>	
+								<div class="text-center product-name" (click)="redirectToProductDetails(product,1)">
+									{{product.product_name}}
+								</div>
+								<div class="product-box-price d-flex mb-3">
+									<div class="col-md-6 p-0 text-center">
+                                        <ng-continer *ngIf="!(product.comparision_price==0.00 || product.comparision_price==0)">
+                                            <sub class="amount strike-through">{{product.comparision_price}} €</sub>
+                                            <div class="amount text-danger">{{product.price}} €</div>
+                                        </ng-continer>
+                                        <ng-continer *ngIf="(product.comparision_price==0.00 || product.comparision_price==0)">
+                                            <div class="amount">{{product.price}} €</div>
+                                        </ng-continer>
+                                    </div>
+                                    <div class="rating product-rating col-md-6  p-0">
+                                        <rating [(ngModel)]="product.rating" [max]="maxRating" [readonly]="isReadOnly"></rating>
+                                    </div>
+								</div>
+								<div class="text-center">
+                                    <button class="btn btn-primary" (click)="redirectToProductDetails(product,0)" type="button" >Į krepšelį</button>
+                                </div>
+								<!-- <div class="color-area">
+                                    <div class="color-area-inner" style="border-bottom: 1px solid {{product.product_label_color}};">
+                                        <label class="text-white m-0" style="background-color:{{product.product_label_color}}">{{product.product_label}}</label>
+                                    </div>
+                                </div> -->
+							</div>
+						</div>
+					</ng-container>
+          			<!-- End Product item -->
+          			<!-- Start Product item Not Found -->
+					<ng-container *ngIf="!productList.length && !loading">
+						<div class="col-xl-12 col-sm-12 col-md-12 col-lg-12 ">
+							<h4 class="text-center mt-5">Nėra prekės, kuri atitiktų paieškos kriterijus.</h4>
+						</div>
+          			</ng-container>
+          			<!-- End Product item Not Found -->
+        		</div>
+        		<!-- Start Product Item Pagination -->
+				<div class="row" *ngIf="productList.length">
+					<div class="col-sm-12 col-md-12 col-lg-12">
+						<pagination previousText="Ankstesnis" nextText="Kitas" [(ngModel)]="page" [totalItems]="totalProduct" [itemsPerPage]="12"
+							(pageChanged)="pageChanged($event)"  [maxSize]="maxSize"></pagination>
+					</div>
+        		</div>
+        		<!-- End Product Item Pagination -->
+      		</div>
+		</div>
+	</div>
+</section>
+
+<!-- Start Suggestion Product Item -->
+<ng-template #template>
+  	<div class="modal-body">
+      	<button type="button" title="Uždaryti Modal" class="close pull-right" aria-label="Close" (click)="closeModal()">
+      		<span aria-hidden="true">&times;</span>
+    	</button>
+		<div class="text-center mb-3 mt-3">
+			<img class="" src="assets/images/discount.svg" alt="Nuolaidos vaizdas" title="Nuolaidos vaizdas" />
+		</div>
+      	<h2 class="text-center mb-4">Kartu rekomenduojame isigyti</h2>
+      	<div *ngFor="let product of suggestionProductList;let i=index" class="align-items-center d-flex kartu-modal-list">
+          	<div>
+              	<label class="custom-checkbox-1">
+					<input type="checkbox" name="individual" (change)="onCheckSuggestionProduct($event.target.checked,i,product.id)">
+					<span class="checkmark"></span>
+              	</label>
+            </div>
+			<div class="kartu-modal-list-image">
+				<img class="" [src]="product.image[0]" alt="Produkto vaizdas" title="Produkto vaizdas" />
+			</div>
+          <div class="pl-2 pr-2">{{product.product_name}}</div>
+          <div class="kartu-modal-pricing ml-auto">€ {{product.price}}</div>
+      	</div>
+      	<div class="align-items-center d-flex kartu-modal-list bg-white">
+          	<div class="pl-3 pr-3 text-right w-100"><b>Viso moketi</b></div>
+          	<div class="kartu-modal-pricing ml-auto"><b>€ {{selectedProductSuggestionTotal}}</b></div>
+      	</div>
+      	<div class="row mt-4 mb-4 text-center">
+			<div class="col-md-12">
+				<button class="btn btn-primary col-md-4" (click)="addToCartSuggestionProduct()" type="button" title="Į krepšelį">Į krepšelį</button>
+			</div>
+		</div>
+      	<div class="row">
+          	<div class="col-md-12 text-center">
+            	<label class="text-danger">{{errorMessage}}</label>
+          	</div>
+    	</div>
+  	</div>
+</ng-template>
+<!-- End Suggestion Product Item -->
+
+
+
+<!-- Start Product Suggestion Modal  -->
+<ng-template #template3>
+    <div class="modal-body">
+         <button type="button" title="Uždaryti Modal" class="close pull-right" aria-label="Close"
+              (click)="closeProductSuggestionModal()">
+              <span aria-hidden="true">&times;</span>
+         </button>
+         <div class="text-center mb-3 mt-3">
+              <img class="" src="assets/images/discount.svg" alt="Nuolaidos vaizdas" title="Nuolaidos vaizdas" />
+         </div>
+         <h2 class="text-center mb-4">Kartu rekomenduojame isigyti</h2>
+         <div *ngFor="let product of suggestionProductList;let i=index"
+              class="align-items-center d-flex kartu-modal-list">
+              <div>
+                   <label class="custom-checkbox-1">
+                        <input type="checkbox" name="individual" (change)="onCheckSuggestionProduct($event.target.checked,i,product.id)" />
+                        <span class="checkmark"></span>
+                   </label>
+              </div>
+              <div class="kartu-modal-list-image">
+                   <img class="" [src]="product.image[0]" alt="Produkto vaizdas" title="Produkto vaizdas" />
+              </div>
+              <div class="pl-2 pr-2">{{product.product_name}}</div>
+              <div class="kartu-modal-pricing ml-auto">€ {{product.price}}</div>
+         </div>
+         <div class="align-items-center d-flex kartu-modal-list bg-white">
+              <div class="pl-3 pr-3 text-right w-100"><b>Viso moketi</b></div>
+              <div class="kartu-modal-pricing ml-auto"><b>€ {{decimalNumber(selectedProductSuggestionTotal)}}</b></div>
+         </div>
+         <div class="row mt-4 mb-4 text-center">
+              <div class="col-md-12">
+                <button class="btn btn-primary col-md-4" (click)="addToCartSuggestionProduct()" type="button" title="Į krepšelį">Į krepšelį</button>
+              </div>
+         </div>
+         <div class="row">
+              <div class="col-md-12 text-center">
+                   <label class="text-danger">{{productErrorMessage}}</label>
+              </div>
+         </div>
+    </div>
+</ng-template>
+<!-- End Product Suggestion Modal  -->
